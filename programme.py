@@ -1,12 +1,15 @@
+import create_database 
 import sqlite3
-import create_database
 import del_database
-
+import connectorandcursor
 #lors du premier lancement, mettre en commentaire la ligne suivante
 del_database.delete_table()
-create_database.initialisation_table()
-con = sqlite3.connect('TeacherdleDB.db')
-cur = con.cursor()
-res = cur.execute("SELECT id FROM Teachers")
-res.fetchall()
-print(res)
+
+co = connectorandcursor.con()
+cu = connectorandcursor.cur()
+
+create_database.initialisation_table(co,cu)
+
+res = cu.execute("SELECT id FROM Teachers")
+resultar_requete = res.fetchall()
+
