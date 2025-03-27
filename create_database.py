@@ -5,7 +5,8 @@ def initialisation_table(connection,cursor):
     
     
     cursor.execute("""CREATE TABLE Teachers (
-        id TEXT NOT NULL PRIMARY KEY,
+        id integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+        nom TEXT NOT NULL ,
         Genre TEXT NOT NULL,
         Hair_status TEXT NOT NULL,
         Region TEXT NOT NULL,
@@ -19,8 +20,8 @@ def initialisation_table(connection,cursor):
         Text TEXT NOT NULL,
         Teacher TEXT NOT NULL CONSTRAINT FK_teachers_citations REFERENCES Teachers(id))
         """)
-    cursor.execute("""INSERT INTO Teachers VALUES ("test1","test1","test1","test1","test1","test1","test1","test1")
-                ,("test2","test2","test2","test2","test2","test2","test2","test2")
+    cursor.execute("""INSERT INTO Teachers VALUES (1,"test1","test1","test1","test1","test1","test1","test1","test1")
+                ,(2,"test2","test2","test2","test2","test2","test2","test2","test2")
     
     """)
     connection.commit()
