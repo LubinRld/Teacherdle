@@ -22,7 +22,17 @@ def select_suggestion(event):
         selected = suggestions_list.get(suggestions_list.curselection())
         search_var.set(selected)
 
-# Liste de nom de professeur
+def remove_selected_item():
+    selected_text = search_var.get()
+    if selected_text in teacher_list:
+        teacher_list.remove(selected_text)
+        search_var.set("")  # Vide la barre de recherche
+        update_suggestions()  # Met à jour la liste
+        print(f"'{selected_text}' a été supprimé de la liste")  # Feedback
+
+
+
+# Liste de nom de proffesseur
 teacher_list = [
     "Meunier", "Salomon", "Hertz", "Grelu", "Chassel", "Riton", "Philliams", "Saint-Paul", "Salaun", "Petit-jean",
     "Mignot", "Pellion", "Lugern", "Bidault", "Weber"
@@ -37,19 +47,48 @@ window.geometry("500x300")
 search_var = tk.StringVar()
 search_var.trace_add("write", update_suggestions) # trace est une méthode qui "espionne" la variable. Dès qu'elle est modifiée, elle appelle une fonction.
 
-# Cadre principal
-frame = tk.Frame(window)
-frame.pack(pady=20)
+# Frame principal pour la barre de recherche et le bouton
+main_frame = tk.Frame(window, padx=20, pady=20)
+main_frame.pack()
+
+# Sous-frame pour la barre de recherche et le bouton
+search_button_frame = tk.Frame(main_frame)
+search_button_frame.pack(fill=tk.X)
 
 # Barre de recherche
-search_entry = tk.Entry(frame, textvariable=search_var, width=50, font=('Arial', 12))
-search_entry.pack()
+search_entry = tk.Entry(
+    search_button_frame, 
+    textvariable=search_var, 
+    width=40, 
+    font=('Arial', 12)
+)
+search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+# Bouton d'entrer(confirmation)
+enter_button = tk.Button(
+    search_button_frame, 
+    text="Entrer", 
+    command=remove_selected_item,
+    bg="#ff9999",
+    font=('Arial', 12)
+)
+enter_button.pack(side=tk.RIGHT, padx=(10, 0))
 
 # Liste des suggestions
-suggestions_list = tk.Listbox(frame, width=50, height=5, font=('Arial', 12))
+suggestions_frame = tk.Frame(main_frame)
+suggestions_frame.pack(fill=tk.X)
+suggestions_list = tk.Listbox(
+    suggestions_frame, 
+    width=40, 
+    height=6, 
+    font=('Arial', 12)
+)
 
 # Lier la sélection dans la liste à la barre de recherche
 suggestions_list.bind("<<ListboxSelect>>", select_suggestion)
+
+# Bind de la touche Entrée
+search_entry.bind("<Return>", lambda event: remove_selected_item())
 
 # Lancement de l'application
 window.mainloop()
