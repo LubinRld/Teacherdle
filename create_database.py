@@ -1,5 +1,4 @@
 import sqlite3
-import connectorandcursor
 
 def initialisation_table(connection,cursor):
     
