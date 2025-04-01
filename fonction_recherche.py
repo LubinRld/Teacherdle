@@ -30,8 +30,6 @@ def remove_selected_item():
         update_suggestions()  # Met à jour la liste
         print(f"'{selected_text}' a été supprimé de la liste")  # Feedback
 
-
-
 # Liste de nom de proffesseur
 teacher_list = [
     "Meunier", "Salomon", "Hertz", "Grelu", "Chassel", "Riton", "Philliams", "Saint-Paul", "Salaun", "Petit-jean",
@@ -43,8 +41,7 @@ window = tk.Tk()
 window.title("Teacherdle")
 window.geometry("500x300")
 
-# Variable pour stocker le texte de recherche
-search_var = tk.StringVar()
+search_var = tk.StringVar() # Variable pour stocker le texte de recherche
 search_var.trace_add("write", update_suggestions) # trace est une méthode qui "espionne" la variable. Dès qu'elle est modifiée, elle appelle une fonction.
 
 # Frame principal pour la barre de recherche et le bouton
