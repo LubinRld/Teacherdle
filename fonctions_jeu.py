@@ -5,3 +5,4 @@ def  test_successful(guess,co,cu):
     print(guess)
     result = cu.execute("SELECT * from Teachers WHERE nom ={}".format(guess))
     return result
+
