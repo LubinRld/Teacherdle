@@ -19,7 +19,7 @@ def initialisation_table(connection,cursor):
         Text TEXT NOT NULL,
         Teacher TEXT NOT NULL CONSTRAINT FK_teachers_citations REFERENCES Teachers(id))
         """)
-    cursor.execute("""INSERT INTO Teachers VALUES (1,"test1","test1","test1","test1","test1","test1","test1","test1")
+    cursor.execute("""INSERT INTO Teachers VALUES (1,"test1","test2","test1","test1","test1","test1","test1","test1")
                 ,(2,"test2","test2","test2","test2","test2","test2","test2","test2")
     
     """)
