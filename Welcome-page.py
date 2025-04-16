@@ -1,5 +1,5 @@
 from tkinter import *
-
+import programme
 Main_window = Tk()
 Main_window.title("Teacherdle")
 Main_window.geometry("1080x720")
@@ -9,11 +9,12 @@ Label_Teacherdle = Label(Main_window, text = "Teacherdle", font=("Helvetica", 40
 Label_Teacherdle.pack(padx=0.5, pady=12)
 
 # Liste de nom de professeur
-teacher_list = [
-"Meunier", "Salomon", "Hertz", "Grelu", "Chassel", "Riton", "Philliams", "Saint-Paul", "Salaun", "Petit-jean",
-"Mignot", "Pellion", "Lugern", "Bidault", "Weber"
-]
-
+nom = programme.envoie_noms()
+print(nom)
+teacher_list =[]
+for i in range(len(nom)):
+    teacher_list.append(nom[i][0])
+print(teacher_list)
 def Create_Welcome_page():
     Button_Frame = Frame(Main_window, bg= '#00e1ff')
     Label_Description = Label(Main_window, text = "Devine tes profs de Polytech Dijon",font=("Helvetica", 20), bg='#00e1ff')
