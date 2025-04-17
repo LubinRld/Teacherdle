@@ -1,5 +1,5 @@
 import sqlite3
-
+#citation de riton : "on peut intuiter un condensateur plan infini"
 def initialisation_table(connection,cursor):
     
     

@@ -11,12 +11,25 @@ co = sqlite3.connect("TeacherdleDB.db") #recuperation du connecteur
 cu = co.cursor() #recuperation du curseur
 
 create_database.initialisation_table(co,cu)# on initialise la table avec ces deux éléments
+def get_infos_prof(id):
+    infos_finales = []
+    infos = cu.execute("SELECT * FROM Teachers WHERE id={}".format(id))
+    infos_filtrées = infos.fetchall()
+    for i in infos_filtrées:
+        infos_finales.append(infos_filtrées[0][i])
+    return infos_finales
 
 def envoie_noms():
+    teacher_list = []
     noms = cu.execute("""SELECT nom FROM Teachers""")
     noms_filtrés= noms.fetchall()
-    return noms_filtrés
+    for i in range(len(noms_filtrés)):
+        teacher_list.append(noms_filtrés[i][0])
+    return teacher_list
 
+    
+    
+    
 def algo_jeu():
 #fin de la mise en place, on commence le jeu
     a = random.randint(1,26)    #choix d un id de professeur aléatoire
