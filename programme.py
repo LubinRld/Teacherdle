@@ -27,7 +27,10 @@ def envoie_noms():
         teacher_list.append(noms_filtrés[i][0])
     return teacher_list
 
-    
+def nombres_profs():
+    nombre = cu.execute("SELECT id FROM Teachers")
+    nombre_filtrés = nombre.fetchall()
+    return len(nombre_filtrés)
     
     
 def algo_jeu():
