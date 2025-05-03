@@ -1,5 +1,5 @@
 from tkinter import *
-
+from tkinter import ttk
 Main_window = Tk()
 Main_window.title("Teacherdle")
 Main_window.geometry("1080x720")
@@ -25,9 +25,63 @@ def Create_Welcome_page():
     Button_Frame.pack(padx=10, pady=70)
 
 def Create_Classic_page():
-    create_search_bar(Main_window, teacher_list)
+    Classic_frame = Frame(Main_window, bg= '#00e1ff')
+    Classic_frame.pack(fill="both", expand=True)
+    create_search_bar(Classic_frame, teacher_list)
+    table_container = Frame(Classic_frame, bg='#00e1ff')
+    table_container.pack(fill=BOTH, expand=True,padx=20, pady=10)
+    create_table(table_container)
+    global lignes_container
+    lignes_container = Frame(Classic_frame, bg='#00e1ff')
+    lignes_container.pack(fill=BOTH, expand=True)
+    global current_row
+    current_row=1
 
-        
+def create_table(parent):
+    global table_frame 
+    table_frame = Frame(parent, bg='white')
+    table_frame.pack(fill=BOTH, padx=20, pady=20)
+    categories = ["Professeur", "Genre", "Date de thèse", "type", "Matière", "Fonction particulière"]
+    for col in range(len(categories)):
+        table_frame.grid_columnconfigure(col, weight=1)
+    for col, title in enumerate(categories):
+
+        header = Label(
+        table_frame,
+        text=title,
+        font=("Arial", 14, "bold"),
+        bg="white",
+        padx=15,
+        pady=10,
+        relief=GROOVE,
+        borderwidth=2
+        )
+        header.grid(row=0, column=col,sticky="nsew", padx=1, pady=1)
+
+def ajouter_ligne_loldle(data):
+    global current_row
+    donnees = data
+    
+    for col, info in enumerate(donnees[0]):  
+        case = Label(
+            table_frame,
+            text=info,  
+            bg="lightgray", #mettre la fonction pour déterminer la couleur
+            fg="black",
+            font=("Arial", 12),
+            padx=10,
+            pady=10,
+            relief="solid",
+            borderwidth=1,
+            wraplength=120,
+            justify="center"
+        )
+        case.grid(row=current_row, column=col, sticky="nsew", padx=1, pady=5)
+
+    # Incrémenter la ligne pour les prochaines données
+    current_row += 1
+
+
 
 def update_suggestions(*args):
     # Met à jour la liste des suggestions en fonction du texte saisi
@@ -86,7 +140,7 @@ def create_search_bar(window, teacher_list):
     enter_button = Button(
         search_button_frame, 
         text="Entrer", 
-        command=remove_selected_item,
+        command= lambda:(remove_selected_item(), ajouter_ligne_loldle([("Meunier", "Homme", "2005", "TD, CM, TP", "info", "Responsable L3")])),
         bg="#ff9999",
         font=('Arial', 12)
     )

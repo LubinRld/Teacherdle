@@ -3,7 +3,7 @@ import sqlite3
 import del_database
 import random
 #lors du premier lancement, mettre en commentaire la ligne suivante
-del_database.delete_table()
+#del_database.delete_table()
 
 co = sqlite3.connect("TeacherdleDB.db") #recuperation du connecteur
 cu = co.cursor() #recuperation du curseur
