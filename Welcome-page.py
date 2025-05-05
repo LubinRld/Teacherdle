@@ -58,7 +58,7 @@ def create_table(parent):
         )
         header.grid(row=0, column=col,sticky="nsew", padx=1, pady=1)
 
-def ajouter_ligne_loldle(data):
+def create_answer(data):
     global current_row
     donnees = data
     
@@ -140,7 +140,7 @@ def create_search_bar(window, teacher_list):
     enter_button = Button(
         search_button_frame, 
         text="Entrer", 
-        command= lambda:(remove_selected_item(), ajouter_ligne_loldle([("Meunier", "Homme", "2005", "TD, CM, TP", "info", "Responsable L3")])),
+        command= lambda:(remove_selected_item(), create_answer([("Meunier", "Homme", "2005", "TD, CM, TP", "info", "Responsable L3")])),
         bg="#ff9999",
         font=('Arial', 12)
     )
