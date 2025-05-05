@@ -37,6 +37,7 @@ def Create_Classic_page():
     global current_row
     current_row=1
 
+
 def create_table(parent):
     global table_frame 
     table_frame = Frame(parent, bg='white')
@@ -141,7 +142,7 @@ def create_search_bar(window, noms):
     enter_button = Button(
         search_button_frame, 
         text="Entrer", 
-        command= lambda:(remove_selected_item(), create_answer([("Meunier", "Homme", "2005", "TD, CM, TP", "info", "Responsable L3")])),
+        command= lambda:(create_answer(programme.get_infos_prof(search_var.get())), remove_selected_item()),
         bg="#ff9999",
         font=('Arial', 12)
     )

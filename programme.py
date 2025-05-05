@@ -12,10 +12,10 @@ cu = co.cursor() #recuperation du curseur
 create_database.initialisation_table(co,cu)# on initialise la table avec ces deux éléments
 def get_infos_prof(nom):
     infos_finales = []
-    infos = cu.execute("SELECT * FROM Teachers WHERE nom={}".format(nom))
+    infos = cu.execute("SELECT * FROM Teachers WHERE nom=?", (nom,))
     infos_filtrées = infos.fetchall()
     for i in infos_filtrées:
-        infos_finales.append(infos_filtrées[0][i])
+        infos_finales.append(list(infos_filtrées[0]))
     return infos_finales
 
 def envoie_noms():
