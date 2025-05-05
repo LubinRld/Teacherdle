@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import ttk
+import programme
+
 Main_window = Tk()
 Main_window.title("Teacherdle")
 Main_window.geometry("1080x720")
@@ -9,10 +11,8 @@ Label_Teacherdle = Label(Main_window, text = "Teacherdle", font=("Helvetica", 40
 Label_Teacherdle.pack(padx=0.5, pady=12)
 
 # Liste de nom de professeur
-teacher_list = [
-"Meunier", "Salomon", "Hertz", "Grelu", "Chassel", "Riton", "Philliams", "Saint-Paul", "Salaun", "Petit-jean",
-"Mignot", "Pellion", "Lugern", "Bidault", "Weber"
-]
+noms = programme.envoie_noms()
+print(noms)
 
 def Create_Welcome_page():
     Button_Frame = Frame(Main_window, bg= '#00e1ff')
@@ -27,7 +27,7 @@ def Create_Welcome_page():
 def Create_Classic_page():
     Classic_frame = Frame(Main_window, bg= '#00e1ff')
     Classic_frame.pack(fill="both", expand=True)
-    create_search_bar(Classic_frame, teacher_list)
+    create_search_bar(Classic_frame, noms)
     table_container = Frame(Classic_frame, bg='#00e1ff')
     table_container.pack(fill=BOTH, expand=True,padx=20, pady=10)
     create_table(table_container)
@@ -83,6 +83,7 @@ def create_answer(data):
 
 
 
+
 def update_suggestions(*args):
     # Met à jour la liste des suggestions en fonction du texte saisi
     search_term = search_var.get().lower()
@@ -94,7 +95,7 @@ def update_suggestions(*args):
         suggestions_list.pack()
         suggestions_list.delete(0, END)  # Effacer les anciennes suggestions
         # Filtrer les mots qui commencent par le texte saisi
-        suggestions = [word for word in teacher_list if word.lower().startswith(search_term)]
+        suggestions = [word for word in noms if word.lower().startswith(search_term)]
         # Ajouter les suggestions à la liste
         for word in suggestions:
             suggestions_list.insert(END, word)
@@ -107,13 +108,13 @@ def select_suggestion(event):
 
 def remove_selected_item():
     selected_text = search_var.get()
-    if selected_text in teacher_list:
-        teacher_list.remove(selected_text)
+    if selected_text in noms:
+        noms.remove(selected_text)
         search_var.set("")  # Vide la barre de recherche
         update_suggestions()  # Met à jour la liste
         print(f"'{selected_text}' a été supprimé de la liste") 
 
-def create_search_bar(window, teacher_list):
+def create_search_bar(window, noms):
     global search_var, suggestions_list
 
     search_var = StringVar() # Variable pour stocker le texte de recherche
