@@ -23,7 +23,7 @@ def Create_Welcome_page():
     Button_Frame.pack(padx=10, pady=70)
 
 def Create_Classic_page():
-    create_search_bar(Main_window, teacher_list)
+    create_search_bar(Main_window, noms)
 
         
 
@@ -38,7 +38,7 @@ def update_suggestions(*args):
         suggestions_list.pack()
         suggestions_list.delete(0, END)  # Effacer les anciennes suggestions
         # Filtrer les mots qui commencent par le texte saisi
-        suggestions = [word for word in teacher_list if word.lower().startswith(search_term)]
+        suggestions = [word for word in noms if word.lower().startswith(search_term)]
         # Ajouter les suggestions à la liste
         for word in suggestions:
             suggestions_list.insert(END, word)
@@ -51,13 +51,13 @@ def select_suggestion(event):
 
 def remove_selected_item():
     selected_text = search_var.get()
-    if selected_text in teacher_list:
-        teacher_list.remove(selected_text)
+    if selected_text in noms:
+        noms.remove(selected_text)
         search_var.set("")  # Vide la barre de recherche
         update_suggestions()  # Met à jour la liste
         print(f"'{selected_text}' a été supprimé de la liste") 
 
-def create_search_bar(window, teacher_list):
+def create_search_bar(window, noms):
     global search_var, suggestions_list
 
     search_var = StringVar() # Variable pour stocker le texte de recherche
