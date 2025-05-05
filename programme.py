@@ -11,9 +11,9 @@ co = sqlite3.connect("TeacherdleDB.db") #recuperation du connecteur
 cu = co.cursor() #recuperation du curseur
 
 create_database.initialisation_table(co,cu)# on initialise la table avec ces deux éléments
-def get_infos_prof(id):
+def get_infos_prof(nom):
     infos_finales = []
-    infos = cu.execute("SELECT * FROM Teachers WHERE id={}".format(id))
+    infos = cu.execute("SELECT * FROM Teachers WHERE nom={}".format(nom))
     infos_filtrées = infos.fetchall()
     for i in infos_filtrées:
         infos_finales.append(infos_filtrées[0][i])
