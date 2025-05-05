@@ -5,7 +5,8 @@ Teacherdle est un jeu de type Wordle, c'est à dire que l'on doit deviner un pro
 Nous utilisons une base de données pour stocker les informations sur les professeurs (données publiques, rien de personnel)
 
 Voici notre diagramme UML de la Base de donnée :
-![image](https://github.com/user-attachments/assets/ccb8b47c-16e0-40ac-b679-32073586da30)
+![image](https://github.com/user-attachments/assets/8e3337ae-208d-4614-b51c-7964583a9607)
+
 
 
 <a name="English-Version"></a>
@@ -16,5 +17,6 @@ Here, we're using a database to stock and use the data about each teachers (only
 
 UML diagramm of our database
 
-![image](https://github.com/user-attachments/assets/4f4979c0-dc01-4148-a9f5-5d2c68c22b3d)
+![image](https://github.com/user-attachments/assets/9c019b0d-b48e-4b20-a8ad-12120b50a1fb)
+
 
