@@ -7,6 +7,9 @@ Nous utilisons une base de données pour stocker les informations sur les profes
 Voici notre diagramme UML de la Base de donnée :
 ![image](https://github.com/user-attachments/assets/8e3337ae-208d-4614-b51c-7964583a9607)
 
+Voici le fonctionnement de l'algorithme de jeu :
+![image](https://github.com/user-attachments/assets/b99424e1-ec4c-43c6-ae8e-da27575bf4c7)
+
 
 
 <a name="English-Version"></a>
@@ -18,5 +21,9 @@ Here, we're using a database to stock and use the data about each teachers (only
 UML diagramm of our database
 
 ![image](https://github.com/user-attachments/assets/9c019b0d-b48e-4b20-a8ad-12120b50a1fb)
+
+Here is the working of the algorithm :
+![image](https://github.com/user-attachments/assets/e392895d-105a-4cc7-89f5-a59f4730201e)
+
 
 
