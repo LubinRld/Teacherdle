@@ -1,5 +1,5 @@
 # Teacherdle
-For English informations, you can go [here](#English Version): 
+For English informations, you can go [here](#English Version) : 
 Teacherdle est un jeu de type Wordle, c'est à dire que l'on doit deviner un professeur de l'école parmi une liste des autres.
 Nous utilisons une base de données pour stocker les informations sur les professeurs (données publiques, en gros c'est pas grave si ca fuite)
 
