@@ -10,9 +10,10 @@ Main_window.config(background='#00e1ff')
 Label_Teacherdle = Label(Main_window, text = "Teacherdle", font=("Helvetica", 40), bg='#00e1ff')
 Label_Teacherdle.pack(padx=0.5, pady=12)
 
+tableau_recherche = ['SALOMON', 'M', '1991', 'TD', 'PHYSIQUE', 'Aucune'] #pour les tests
 # Liste de nom de professeur
 noms = programme.envoie_noms()
-print(noms)
+#print(noms)
 
 def Create_Welcome_page():
     Button_Frame = Frame(Main_window, bg= '#00e1ff')
@@ -59,17 +60,19 @@ def create_table(parent):
         )
         header.grid(row=0, column=col,sticky="nsew", padx=1, pady=1)
 
-def create_answer(data):
+def create_answer(data, tableau_recherche):
     global current_row
+
     donnees = data
     
     for col, info in enumerate(donnees[0]):  
+        answer = tableau_recherche[col]
         case = Label(
             table_frame,
             text=info,  
-            bg="lightgray", #mettre la fonction pour déterminer la couleur
+            bg=create_color(info, answer), #mettre la fonction pour déterminer la couleur
             fg="black",
-            font=("Arial", 12),
+            font=("Arial", 10),
             padx=10,
             pady=10,
             relief="solid",
@@ -83,7 +86,12 @@ def create_answer(data):
     current_row += 1
 
 
-
+def create_color(info, answer):
+    if(info==answer):
+        bg="green"
+    else:
+        bg="red"
+    return bg
 
 def update_suggestions(*args):
     # Met à jour la liste des suggestions en fonction du texte saisi
@@ -142,7 +150,7 @@ def create_search_bar(window, noms):
     enter_button = Button(
         search_button_frame, 
         text="Entrer", 
-        command= lambda:(create_answer(programme.get_infos_prof(search_var.get())), remove_selected_item()),
+        command= lambda:(create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche), remove_selected_item()),
         bg="#ff9999",
         font=('Arial', 12)
     )

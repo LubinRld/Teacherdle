@@ -15,7 +15,7 @@ def get_infos_prof(nom):
     infos = cu.execute("SELECT * FROM Teachers WHERE nom=?", (nom,))
     infos_filtrées = infos.fetchall()
     for i in infos_filtrées:
-        infos_finales.append(list(infos_filtrées[0]))
+        infos_finales.append(list(i[1:]))
     return infos_finales
 
 def envoie_noms():
