@@ -32,21 +32,24 @@ def nombres_profs():
     return len(nombre_filtrés)
     
     
-def algo_jeu():
+def choix_prof():
 #fin de la mise en place, on commence le jeu
     a = random.randint(1,26)    #choix d un id de professeur aléatoire
-    objectif = cu.execute("SELECT nom from Teachers WHERE id={}".format(a)) 
+    objectif = cu.execute("SELECT * from Teachers WHERE id={}".format(a)) 
     print(cu)
     nom_objectif = objectif.fetchall()   #on récupère le nom du professeur "cible" et on le montre pour l'instant
     PROF_RECHERCHE = nom_objectif[0]
-    print(PROF_RECHERCHE[0]) #voici le prof que l on veut (son nom)
-    tableau_recherche_not_fetched = cu.execute("SELECT * from Teachers WHERE id={}".format(a)) #voici la requete qui nous donne les infos de ce prof
-    tableau_recherche = tableau_recherche_not_fetched.fetchall() # on les lets dans un tableau
+    print(PROF_RECHERCHE[1]) #voici le prof que l on veut (son nom)
+    cible = get_infos_prof(PROF_RECHERCHE[1])[0]
+    
+    return cible
+
+"""
     win = 0
     nbr_essais = 5
     while win !=1 and nbr_essais != 0:
-        nbr_essais = nbr_essais-1
-        guess = input() #on guess
+       nbr_essais = nbr_essais-1
+         guess = input() #on guess
         print(PROF_RECHERCHE[0]) #nom du prof cible
         print(guess) #voila ce que l on guess
         if PROF_RECHERCHE[0] == guess: #on compare si c'est la même chose
@@ -67,3 +70,4 @@ def algo_jeu():
                     print("faux")
             print(" fin des infos, on peut re guess")
             
+"""

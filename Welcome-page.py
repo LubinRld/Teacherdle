@@ -10,8 +10,11 @@ Main_window.config(background='#00e1ff')
 Label_Teacherdle = Label(Main_window, text = "Teacherdle", font=("Helvetica", 40), bg='#00e1ff')
 Label_Teacherdle.pack(padx=0.5, pady=12)
 
-tableau_recherche = ['SALOMON', 'M', '1991', 'TD', 'PHYSIQUE', 'Aucune'] #pour les tests
+tableau_recherche = programme.choix_prof() #pour les tests
 # Liste de nom de professeur
+
+print(tableau_recherche)
+
 noms = programme.envoie_noms()
 #print(noms)
 
