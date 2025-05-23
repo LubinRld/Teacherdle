@@ -99,20 +99,33 @@ def create_color(info, answer):
             num += 1
     if num ==4:
         bg = create_fleche(info,answer)
-    elif len(info)==len(answer):
-        compteur = 0
-        for i in range (0,len(info)):
-            if info[i] == answer[i] and info[i] != " ":
-                compteur +=1
-        if compteur >= 2:
-            bg="orange"
-    else:
-        print(info)
-        print(answer)
-        if info.find(answer) != -1:
-            bg="orange"
-        elif answer.find(info) != -1:
-            bg="orange"
+
+    # elif len(info)==len(answer):
+    #     compteur = 0
+    #     for i in range (0,len(info)):
+    #         if info[i] == answer[i] and info[i] != " ":
+    #             compteur +=1
+    #     if compteur >= 2:
+    #         bg="orange"
+    # else:
+    #     print(info)
+    #     print(answer)
+    #     if info.find(answer) != -1:
+    #         bg="orange"
+    #     elif answer.find(info) != -1:
+    #         bg="orange"
+
+    infos_split = info.split()
+    answer_split = answer.split()
+    split = 0
+    for k in infos_split:
+        for l in answer_split:
+            if k==l:
+                split +=1
+            
+    if split > 0:
+        bg ="orange"
+    
     if(info==answer):
         bg="green"
        
