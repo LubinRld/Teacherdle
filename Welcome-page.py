@@ -18,14 +18,27 @@ print(tableau_recherche)
 noms = programme.envoie_noms()
 #print(noms)
 
+# Fonction pour gérer l'effet de survol
+def on_enter(e, button, size):
+    button['font'] = ("Arial", size + 2)  # Augmente la taille de la police
+
+def on_leave(e, button, size):
+    button['font'] = ("Arial", size)  # Rétablit la taille originale
+
 def Create_Welcome_page():
     Button_Frame = Frame(Main_window, bg= '#00e1ff')
     Label_Description = Label(Main_window, text = "Devine tes profs de Polytech Dijon",font=("Helvetica", 20), bg='#00e1ff')
     Label_Description.pack(padx=0.5, pady=0.5)
+    
     Classique_button = Button(Button_Frame, text = "Classique", font=("Arial", 30), bg='#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page()))
-    Citation_button = Button(Button_Frame, text = "Citation", font=("Arial", 30), bg= '#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy()))
     Classique_button.pack(padx=10, pady=0)
+    Classique_button.bind("<Enter>", lambda e, b=Classique_button: on_enter(e, b, 30))
+    Classique_button.bind("<Leave>", lambda e, b=Classique_button: on_leave(e, b, 30))
+    
+    Citation_button = Button(Button_Frame, text = "Citation", font=("Arial", 30), bg= '#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy()))
     Citation_button.pack(padx=10, pady=50)
+    Citation_button.bind("<Enter>", lambda e, b=Citation_button: on_enter(e, b, 30))
+    Citation_button.bind("<Leave>", lambda e, b=Citation_button: on_leave(e, b, 30))
     Button_Frame.pack(padx=10, pady=70)
 
 def Create_Classic_page():
@@ -128,6 +141,7 @@ def remove_selected_item():
 
 def enter_pressed(event=None):  # event=None pour gérer les appels avec ou sans événement
     if search_var.get():  # Ne rien faire si la barre de recherche est vide
+        
         create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche)
         remove_selected_item()
 
@@ -163,6 +177,8 @@ def create_search_bar(window, noms):
         font=('Arial', 12)
     )
     enter_button.pack(side=RIGHT, padx=(10, 0))
+    enter_button.bind("<Enter>", lambda e, b=enter_button: on_enter(e, b, 12))
+    enter_button.bind("<Leave>", lambda e, b=enter_button: on_leave(e, b, 12))
 
     # Liste des suggestions
     suggestions_frame = Frame(main_frame)
