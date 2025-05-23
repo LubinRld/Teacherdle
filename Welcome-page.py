@@ -172,13 +172,11 @@ def create_search_bar(window, noms):
     enter_button = Button(
         search_button_frame, 
         text="Entrer", 
-        command= enter_pressed(),
+        command= enter_pressed,
         bg="#ff9999",
         font=('Arial', 12)
     )
     enter_button.pack(side=RIGHT, padx=(10, 0))
-    enter_button.bind("<Enter>", lambda e, b=enter_button: on_enter(e, b, 12))
-    enter_button.bind("<Leave>", lambda e, b=enter_button: on_leave(e, b, 12))
 
     # Liste des suggestions
     suggestions_frame = Frame(main_frame)
