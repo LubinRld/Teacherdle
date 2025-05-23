@@ -88,15 +88,18 @@ def create_answer(data, tableau_recherche):
     # Incrémenter la ligne pour les prochaines données
     current_row += 1
 def create_fleche(info,answer):
-    bg = 5
+    bg ="white"
     return bg
 
 def create_color(info, answer):
     bg ="red"
-    if int(info) >1800 and int(info)<2050:
+    num = 0
+    for i in range(0,len(info)):
+        if info[i] in ['1','2','3','4','5','6','7','8','9','0']:
+            num += 1
+    if num ==4:
         bg = create_fleche(info,answer)
-    
-    if len(info)==len(answer):
+    elif len(info)==len(answer):
         compteur = 0
         for i in range (0,len(info)):
             if info[i] == answer[i] and info[i] != " ":
