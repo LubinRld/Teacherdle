@@ -87,13 +87,33 @@ def create_answer(data, tableau_recherche):
 
     # Incrémenter la ligne pour les prochaines données
     current_row += 1
-
+def create_fleche(info,answer):
+    bg = 5
+    return bg
 
 def create_color(info, answer):
+    bg ="red"
+    if int(info) >1800 and int(info)<2050:
+        bg = create_fleche(info,answer)
+    
+    if len(info)==len(answer):
+        compteur = 0
+        for i in range (0,len(info)):
+            if info[i] == answer[i] and info[i] != " ":
+                compteur +=1
+        if compteur >= 2:
+            bg="orange"
+    else:
+        print(info)
+        print(answer)
+        if info.find(answer) != -1:
+            bg="orange"
+        elif answer.find(info) != -1:
+            bg="orange"
     if(info==answer):
         bg="green"
-    else:
-        bg="red"
+       
+            
     return bg
 
 def update_suggestions(*args):
