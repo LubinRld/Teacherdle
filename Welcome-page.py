@@ -126,6 +126,11 @@ def remove_selected_item():
         update_suggestions()  # Met à jour la liste
         print(f"'{selected_text}' a été supprimé de la liste") 
 
+def enter_pressed(event=None):  # event=None pour gérer les appels avec ou sans événement
+    if search_var.get():  # Ne rien faire si la barre de recherche est vide
+        create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche)
+        remove_selected_item()
+
 def create_search_bar(window, noms):
     global search_var, suggestions_list
 
@@ -153,7 +158,7 @@ def create_search_bar(window, noms):
     enter_button = Button(
         search_button_frame, 
         text="Entrer", 
-        command= lambda:(create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche), remove_selected_item()),
+        command= enter_pressed(),
         bg="#ff9999",
         font=('Arial', 12)
     )
@@ -173,7 +178,7 @@ def create_search_bar(window, noms):
     suggestions_list.bind("<<ListboxSelect>>", select_suggestion)
 
     # Bind de la touche Entrée
-    search_entry.bind("<Return>", lambda event: remove_selected_item())
+    Main_window.bind("<Return>", lambda event: enter_pressed())
     
 Create_Welcome_page()
 Main_window.mainloop()
