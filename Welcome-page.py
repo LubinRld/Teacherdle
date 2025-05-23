@@ -72,7 +72,7 @@ def create_answer(data, tableau_recherche):
         answer = tableau_recherche[col]
         case = Label(
             table_frame,
-            text=info,  
+            text=info + create_fleche(info,answer),  
             bg=create_color(info, answer), #mettre la fonction pour déterminer la couleur
             fg="black",
             font=("Arial", 10),
@@ -89,12 +89,16 @@ def create_answer(data, tableau_recherche):
     current_row += 1
 def create_fleche(info,answer):
     num = 0
+    arrow = ''
     for i in range(0,len(info)):
         if info[i] in ['1','2','3','4','5','6','7','8','9','0']:
             num += 1
     if num ==4:
-        bg ="white"
-    return bg
+        if info > answer:
+            arrow ='▼'
+        else: 
+            arrow ='▲'
+    return arrow
 
 def create_color(info, answer):
     bg ="red"
