@@ -10,7 +10,7 @@ Main_window.title("Teacherdle")
 Main_window.geometry("1080x720")
 Main_window.iconbitmap("Logo.ico")
 Main_window.configure(fg_color='#00e1ff')
-
+global x
 import random
 import threading
 import time
@@ -40,16 +40,18 @@ def show_win_animation():
 
     # Confetti animation
     def confetti_animation():
-        for _ in range(40):
+        for _ in range(100):
             label = ctk.CTkLabel(
                 overlay,
                 text="✨",
-                font=ctk.CTkFont(size=random.randint(14, 20)),
+                font=ctk.CTkFont(size=random.randint(1, 50)),
+                bg_color="transparent",
                 text_color=random.choice(["#ff5e5e", "#f7c948", "#5ec576", "#5ea8ff", "#b15eff"])
+                
             )
             label.place(
-                x=random.randint(20, 1040),
-                y=random.randint(20, 700)
+                x = get_coord_x(),
+                y = get_coord_y()
             )
             overlay.after(random.randint(800, 2000), label.destroy)
 
@@ -59,7 +61,26 @@ global current_try
 current_try = 0
 MAX_TRIES = 6
 
+def get_coord_y():
+    global x
+    y=random.randint(20, 720)
+    if x > 320 and x < 720:
+        while (x > 320 and x < 720) and  (y > 360 and y < 460):
+            y=random.randint(20, 720)
+    
+    return y
+def get_coord_x():
+    global x
+    x=random.randint(20, 1040)
+    while x > 320 and x < 720:
+        x=random.randint(20, 1040)
+    return x
 
+# def get_y():
+#     y=random.randint(20, 720)
+#     while y > 260 and y < 460:
+#         y=random.randint(20, 720)
+#     return y
 
 def show_defeat_animation(correct_answer):
     overlay = ctk.CTkFrame(Main_window, fg_color="black", corner_radius=0)
