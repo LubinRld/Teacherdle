@@ -70,7 +70,9 @@ def create_table(parent):
 
 def create_answer(data, tableau_recherche):
     global current_row
-
+    global compteur_essais
+    if compteur_essais >=6:
+        return 0 #defaite
     donnees = data
     reussi = 0
     for col, info in enumerate(donnees[0]):
@@ -78,7 +80,7 @@ def create_answer(data, tableau_recherche):
         if answer == info:
             reussi+=1
         if reussi == 6:
-            print("fin de truc")
+            print("fin de truc")#VICTOIRE
         
         case = Label(
             
@@ -171,11 +173,11 @@ def select_suggestion(event):
         search_var.set(selected)
 def remove_selected_item():
     selected_text = search_var.get()
-    
+    global compteur_essais
     if selected_text in noms:
         compteur_essais +=1
         if compteur_essais >= 6:
-            pass
+            print("perdu sale noob")
         else:
             noms.remove(selected_text)
             
