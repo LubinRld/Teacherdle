@@ -9,20 +9,20 @@ Main_window.iconbitmap("Logo.ico")
 Main_window.config(background='#00e1ff')
 Label_Teacherdle = Label(Main_window, text = "Teacherdle", font=("Helvetica", 40), bg='#00e1ff')
 Label_Teacherdle.pack(padx=0.5, pady=12)
-
+global tableau_recherche
 tableau_recherche = programme.choix_prof() #pour les tests
 # Liste de nom de professeur
 
-print(tableau_recherche)
+#print(tableau_recherche)
 
 noms = programme.envoie_noms()
-#print(noms)
+print(noms)
 
 def Create_Welcome_page():
     Button_Frame = Frame(Main_window, bg= '#00e1ff')
     Label_Description = Label(Main_window, text = "Devine tes profs de Polytech Dijon",font=("Helvetica", 20), bg='#00e1ff')
     Label_Description.pack(padx=0.5, pady=0.5)
-    Classique_button = Button(Button_Frame, text = "Classique", font=("Arial", 30), bg='#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page()))
+    Classique_button = Button(Button_Frame, text = "Classique", font=("Arial", 30), bg='#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page(), create_data()))
     Citation_button = Button(Button_Frame, text = "Citation", font=("Arial", 30), bg= '#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy()))
     Classique_button.pack(padx=10, pady=0)
     Citation_button.pack(padx=10, pady=50)
@@ -30,6 +30,8 @@ def Create_Welcome_page():
 
 def Create_Classic_page():
     Classic_frame = Frame(Main_window, bg= '#00e1ff')
+    Menu_Buton = Button(Classic_frame, text="Menu Principal", font=("Arial", 10), bg = 'purple', command=lambda:(Classic_frame.destroy(), Create_Welcome_page()))
+    Menu_Buton.pack(anchor='nw', padx=100, pady=10)
     Classic_frame.pack(fill="both", expand=True)
     create_search_bar(Classic_frame, noms)
     table_container = Frame(Classic_frame, bg='#00e1ff')
@@ -96,7 +98,7 @@ def create_fleche(info,answer):
     if num ==4:
         if info > answer:
             arrow ='▼'
-        else: 
+        elif answer > info : 
             arrow ='▲'
     return arrow
 
@@ -135,6 +137,12 @@ def create_color(info, answer):
        
             
     return bg
+
+
+def create_data():
+    global noms, tableau_recherche
+    noms = programme.envoie_noms()
+    tableau_recherche = programme.choix_prof()
 
 def update_suggestions(*args):
     # Met à jour la liste des suggestions en fonction du texte saisi
