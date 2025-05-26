@@ -173,7 +173,6 @@ def remove_selected_item():
     selected_text = search_var.get()
     
     if selected_text in noms:
-        global compteur_essais 
         compteur_essais +=1
         if compteur_essais >= 6:
             pass
@@ -183,13 +182,6 @@ def remove_selected_item():
             search_var.set("")  # Vide la barre de recherche
             update_suggestions()  # Met à jour la liste
             print(f"'{selected_text}' a été supprimé de la liste") 
-            
-def enter_pressed(event=None):  # event=None pour gérer les appels avec ou sans événement
-    if search_var.get():  # Ne rien faire si la barre de recherche est vide
-        global compteur_essais
-        if compteur_essais < 6:
-            create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche)
-            remove_selected_item()
 
 def create_search_bar(window, noms):
     global search_var, suggestions_list
@@ -238,7 +230,7 @@ def create_search_bar(window, noms):
     suggestions_list.bind("<<ListboxSelect>>", select_suggestion)
 
     # Bind de la touche Entrée
-    search_entry.bind("<Return>", lambda event: enter_pressed())
+    search_entry.bind("<Return>", lambda event: remove_selected_item())
     
 Create_Welcome_page()
 Main_window.mainloop()
