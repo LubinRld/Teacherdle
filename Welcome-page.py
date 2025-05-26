@@ -9,11 +9,9 @@ Main_window.iconbitmap("Logo.ico")
 Main_window.config(background='#00e1ff')
 Label_Teacherdle = Label(Main_window, text = "Teacherdle", font=("Helvetica", 40), bg='#00e1ff')
 Label_Teacherdle.pack(padx=0.5, pady=12)
-global tableau_recherche
-tableau_recherche = programme.choix_prof() #pour les tests
-# Liste de nom de professeur
 
-#print(tableau_recherche)
+#global tableau_recherche
+#tableau_recherche = programme.choix_prof() #pour les tests
 
 noms = programme.envoie_noms()
 print(noms)
@@ -22,11 +20,15 @@ def Create_Welcome_page():
     Button_Frame = Frame(Main_window, bg= '#00e1ff')
     Label_Description = Label(Main_window, text = "Devine tes profs de Polytech Dijon",font=("Helvetica", 20), bg='#00e1ff')
     Label_Description.pack(padx=0.5, pady=0.5)
-    Classique_button = Button(Button_Frame, text = "Classique", font=("Arial", 30), bg='#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page(), create_data()))
+    Classique_button = Button(Button_Frame, text = "Classique", font=("Arial", 30), bg='#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page(), init_compteur(), create_data()))
     Citation_button = Button(Button_Frame, text = "Citation", font=("Arial", 30), bg= '#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy()))
     Classique_button.pack(padx=10, pady=0)
     Citation_button.pack(padx=10, pady=50)
     Button_Frame.pack(padx=10, pady=70)
+def init_compteur():
+    global compteur_essais
+    compteur_essais = 0
+
 
 def Create_Classic_page():
     Classic_frame = Frame(Main_window, bg= '#00e1ff')
@@ -67,12 +69,20 @@ def create_table(parent):
 
 def create_answer(data, tableau_recherche):
     global current_row
-
+    global compteur_essais
+    if compteur_essais >=6:
+        return 0 #defaite
     donnees = data
-    
-    for col, info in enumerate(donnees[0]):  
+    reussi = 0
+    for col, info in enumerate(donnees[0]):
         answer = tableau_recherche[col]
+        if answer == info:
+            reussi+=1
+        if reussi == 6:
+            print("fin de truc")#VICTOIRE
+        
         case = Label(
+            
             table_frame,
             text=info + create_fleche(info,answer),  
             bg=create_color(info, answer), #mettre la fonction pour déterminer la couleur
@@ -97,9 +107,9 @@ def create_fleche(info,answer):
             num += 1
     if num ==4:
         if info > answer:
-            arrow ='▼'
-        elif answer > info : 
-            arrow ='▲'
+            arrow =' ▼'
+        elif answer > info: 
+            arrow =' ▲'
     return arrow
 
 def create_color(info, answer):
@@ -134,6 +144,7 @@ def create_color(info, answer):
     
     if(info==answer):
         bg="green"
+        
        
             
     return bg
@@ -165,14 +176,19 @@ def select_suggestion(event):
     if suggestions_list.curselection():
         selected = suggestions_list.get(suggestions_list.curselection())
         search_var.set(selected)
-
 def remove_selected_item():
     selected_text = search_var.get()
+    global compteur_essais
     if selected_text in noms:
-        noms.remove(selected_text)
-        search_var.set("")  # Vide la barre de recherche
-        update_suggestions()  # Met à jour la liste
-        print(f"'{selected_text}' a été supprimé de la liste") 
+        compteur_essais +=1
+        if compteur_essais >= 6:
+            print("perdu sale noob")
+        else:
+            noms.remove(selected_text)
+            
+            search_var.set("")  # Vide la barre de recherche
+            update_suggestions()  # Met à jour la liste
+            print(f"'{selected_text}' a été supprimé de la liste") 
 
 def create_search_bar(window, noms):
     global search_var, suggestions_list
