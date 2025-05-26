@@ -11,6 +11,85 @@ Main_window.geometry("1080x720")
 Main_window.iconbitmap("Logo.ico")
 Main_window.configure(fg_color='#00e1ff')
 
+import random
+import threading
+import time
+
+def show_win_animation():
+    # Overlay frame on the main window
+    overlay = ctk.CTkFrame(Main_window, fg_color="white", corner_radius=0)
+    overlay.place(relx=0, rely=0, relwidth=1, relheight=1)
+
+    # Center message
+    congrats_label = ctk.CTkLabel(
+        overlay,
+        text="🎉 Bravo ! Tu as deviné 🎉",
+        font=ctk.CTkFont(size=32, weight="bold"),
+        text_color="green"
+    )
+    congrats_label.place(relx=0.5, rely=0.4, anchor="center")
+
+    # Close animation button
+    close_button = ctk.CTkButton(
+        overlay,
+        text="Continuer",
+        font=ctk.CTkFont(size=16),
+        command=overlay.destroy
+    )
+    close_button.place(relx=0.5, rely=0.85, anchor="center")
+
+    # Confetti animation
+    def confetti_animation():
+        for _ in range(40):
+            label = ctk.CTkLabel(
+                overlay,
+                text="✨",
+                font=ctk.CTkFont(size=random.randint(14, 20)),
+                text_color=random.choice(["#ff5e5e", "#f7c948", "#5ec576", "#5ea8ff", "#b15eff"])
+            )
+            label.place(
+                x=random.randint(20, 1040),
+                y=random.randint(20, 700)
+            )
+            overlay.after(random.randint(800, 2000), label.destroy)
+
+    threading.Thread(target=confetti_animation, daemon=True).start()
+
+global current_try
+current_try = 0
+MAX_TRIES = 6
+
+
+
+def show_defeat_animation(correct_answer):
+    overlay = ctk.CTkFrame(Main_window, fg_color="black", corner_radius=0)
+    overlay.place(relx=0, rely=0, relwidth=1, relheight=1)
+
+    defeat_label = ctk.CTkLabel(
+        overlay,
+        text="❌ Dommage ! Tu as perdu 😢",
+        font=ctk.CTkFont(size=28, weight="bold"),
+        text_color="red"
+    )
+    defeat_label.place(relx=0.5, rely=0.35, anchor="center")
+
+    reveal_label = ctk.CTkLabel(
+        overlay,
+        text=f"La bonne réponse était :\n{correct_answer.split()[0]}",
+        font=ctk.CTkFont(size=20),
+        text_color="white",
+        justify="center"
+    )
+    reveal_label.place(relx=0.5, rely=0.5, anchor="center")
+
+    retry_button = ctk.CTkButton(
+        overlay,
+        text="Réessayer",
+        font=ctk.CTkFont(size=16),
+        command=lambda: (overlay.destroy(), reset_game())
+    )
+    retry_button.place(relx=0.5, rely=0.7, anchor="center")
+
 Label_Teacherdle = ctk.CTkLabel(
     Main_window,
     text="Teacherdle",
@@ -93,7 +172,9 @@ def create_table(parent):
         table_frame.grid_columnconfigure(col, weight=1)
 
 def create_answer(data, tableau_recherche):
-    global current_row
+    global current_row, current_try
+
+    current_try += 1
     donnees = data
 
     for col, info in enumerate(donnees[0]):
@@ -111,6 +192,13 @@ def create_answer(data, tableau_recherche):
         case.grid(row=current_row, column=col, sticky="nsew", padx=2, pady=4)
 
     current_row += 1
+
+    if all(info == ans for info, ans in zip(donnees[0], tableau_recherche)):
+        show_win_animation()
+    elif current_try >= MAX_TRIES:
+        correct = "\n".join(tableau_recherche)
+        show_defeat_animation(correct)
+
 
 def create_color(info, answer):
     bg ="red"
@@ -221,6 +309,12 @@ def create_search_bar(window, noms):
     suggestions_list.pack()
     suggestions_list.bind("<<ListboxSelect>>", select_suggestion)
     search_entry.bind("<Return>", lambda event: remove_selected_item())
+
+def check_win_condition(info, answer):
+    return info == answer
+
+
+
 
 Create_Welcome_page()
 Main_window.mainloop()
