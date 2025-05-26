@@ -23,13 +23,6 @@ def on_enter(e, button, size):
 def on_leave(e, button, size):
     button['font'] = ("Arial", size)  # Rétablit la taille originale
 
-# Fonction pour gérer l'effet de survol
-def on_enter(e, button, size):
-    button['font'] = ("Arial", size + 2)  # Augmente la taille de la police
-
-def on_leave(e, button, size):
-    button['font'] = ("Arial", size)  # Rétablit la taille originale
-
 def Create_Welcome_page():
     Button_Frame = Frame(Main_window, bg= '#00e1ff')
     Label_Description = Label(Main_window, text = "Devine tes profs de Polytech Dijon",font=("Helvetica", 20), bg='#00e1ff')
