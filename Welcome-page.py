@@ -4,7 +4,8 @@ import programme
 # Setup
 ctk.set_appearance_mode("light")  # or "dark"
 ctk.set_default_color_theme("blue")
-
+import tkinter as tk
+from tkinter import *
 Main_window = ctk.CTk()
 Main_window.title("Teacherdle")
 Main_window.geometry("1080x720")
@@ -15,11 +16,6 @@ import random
 import threading
 import time
 
-<<<<<<< HEAD
-
-#global tableau_recherche
-#tableau_recherche = programme.choix_prof() #pour les tests
-=======
 def show_win_animation():
     # Overlay frame on the main window
     overlay = ctk.CTkFrame(Main_window, fg_color="white", corner_radius=0)
@@ -33,7 +29,6 @@ def show_win_animation():
         text_color="green"
     )
     congrats_label.place(relx=0.5, rely=0.4, anchor="center")
->>>>>>> customtkinter
 
     # Close animation button
     close_button = ctk.CTkButton(
@@ -127,7 +122,6 @@ Label_Teacherdle.pack(pady=12)
 
 tableau_recherche = programme.choix_prof()
 noms = programme.envoie_noms()
-<<<<<<< HEAD
 print(noms)
 
 # Fonction pour gérer l'effet de survol
@@ -152,59 +146,17 @@ def Create_Welcome_page():
     Citation_button.bind("<Enter>", lambda e, b=Citation_button: on_enter(e, b, 30))
     Citation_button.bind("<Leave>", lambda e, b=Citation_button: on_leave(e, b, 30))
     Button_Frame.pack(padx=10, pady=70)
-=======
-
-def Create_Welcome_page():
-    Button_Frame = ctk.CTkFrame(Main_window, fg_color='#00e1ff')
-    Label_Description = ctk.CTkLabel(
-        Main_window,
-        text="Devine tes profs de Polytech Dijon",
-        font=ctk.CTkFont(family="Helvetica", size=20),
-        text_color="black"
-    )
-    Label_Description.pack()
-
-    Classique_button = ctk.CTkButton(
-        Button_Frame,
-        text="Classique",
-        font=ctk.CTkFont(size=30),
-        width=200,
-        command=lambda: (
-            Button_Frame.destroy(),
-            Label_Description.destroy(),
-            Create_Classic_page()
-        )
-    )
-    Citation_button = ctk.CTkButton(
-        Button_Frame,
-        text="Citation",
-        font=ctk.CTkFont(size=30),
-        width=200,
-        command=lambda: (
-            Button_Frame.destroy(),
-            Label_Description.destroy()
-        )
-    )
-    Classique_button.pack(pady=10)
-    Citation_button.pack(pady=30)
-    Button_Frame.pack(pady=70)
->>>>>>> customtkinter
 
 def init_compteur():
     global compteur_essais
     compteur_essais = 0
 
 def Create_Classic_page():
-<<<<<<< HEAD
     Classic_frame = Frame(Main_window, bg= '#00e1ff')
     Menu_Buton = Button(Classic_frame, text="Menu Principal", font=("Arial", 10), bg = 'purple', command=lambda:(Classic_frame.destroy(), Create_Welcome_page()))
     Menu_Buton.pack(anchor='nw', padx=100, pady=10)
-=======
-    Classic_frame = ctk.CTkFrame(Main_window, fg_color='#00e1ff')
->>>>>>> customtkinter
     Classic_frame.pack(fill="both", expand=True)
 
-<<<<<<< HEAD
 def create_table(parent):
     global table_frame 
     table_frame = Frame(parent, bg='white')
@@ -222,41 +174,11 @@ def create_table(parent):
         pady=10,
         relief=GROOVE,
         borderwidth=2
-=======
-    create_search_bar(Classic_frame, noms)
-
-    table_container = ctk.CTkFrame(Classic_frame, fg_color='#00e1ff')
-    table_container.pack(fill="both", expand=True, padx=20, pady=10)
-    create_table(table_container)
-
-    global lignes_container
-    lignes_container = ctk.CTkFrame(Classic_frame, fg_color='#00e1ff')
-    lignes_container.pack(fill="both", expand=True)
-
-    global current_row
-    current_row = 1
-
-def create_table(parent):
-    global table_frame
-    table_frame = ctk.CTkFrame(parent, fg_color="white")
-    table_frame.pack(fill="both", padx=20, pady=20)
-
-    categories = ["Professeur", "Genre", "Date de thèse", "type", "Matière", "Fonction particulière"]
-
-    for col, title in enumerate(categories):
-        header = ctk.CTkLabel(
-            table_frame,
-            text=title,
-            font=ctk.CTkFont(size=14, weight="bold"),
-            text_color="black",
-            bg_color="white"
->>>>>>> customtkinter
         )
         header.grid(row=0, column=col, sticky="nsew", padx=5, pady=5)
         table_frame.grid_columnconfigure(col, weight=1)
 
 def create_answer(data, tableau_recherche):
-<<<<<<< HEAD
     global current_row
     global compteur_essais
     if compteur_essais >=6:
@@ -302,55 +224,6 @@ def create_fleche(info,answer):
 
 def create_color(info, answer):
     bg ="red"
-=======
-    global current_row, current_try
-
-    current_try += 1
-    donnees = data
-
-    for col, info in enumerate(donnees[0]):
-        answer = tableau_recherche[col]
-        case = ctk.CTkLabel(
-            table_frame,
-            text=info,
-            text_color="black",
-            font=ctk.CTkFont(size=12),
-            fg_color=create_color(info, answer),
-            bg_color="white",
-            width=100,
-            corner_radius=6
-        )
-        case.grid(row=current_row, column=col, sticky="nsew", padx=2, pady=4)
-
-    current_row += 1
-
-    if all(info == ans for info, ans in zip(donnees[0], tableau_recherche)):
-        show_win_animation()
-    elif current_try >= MAX_TRIES:
-        correct = "\n".join(tableau_recherche)
-        show_defeat_animation(correct)
-
-
-def create_color(info, answer):
-    bg ="red"
-
-
-    # elif len(info)==len(answer):
-    #     compteur = 0
-    #     for i in range (0,len(info)):
-    #         if info[i] == answer[i] and info[i] != " ":
-    #             compteur +=1
-    #     if compteur >= 2:
-    #         bg="orange"
-    # else:
-    #     print(info)
-    #     print(answer)
-    #     if info.find(answer) != -1:
-    #         bg="orange"
-    #     elif answer.find(info) != -1:
-    #         bg="orange"
-
->>>>>>> customtkinter
     infos_split = info.split()
     answer_split = answer.split()
     split = 0
@@ -358,22 +231,10 @@ def create_color(info, answer):
         for l in answer_split:
             if k==l:
                 split +=1
-<<<<<<< HEAD
     if split > 0:
         bg ="orange"
     if(info==answer):
         bg="green"
-=======
-
-    if split > 0:
-        bg ="orange"
-
-    if(info==answer):
-        bg="green"
-
-
-
->>>>>>> customtkinter
     return bg
 
 
@@ -405,7 +266,6 @@ def remove_selected_item():
     selected_text = search_var.get()
     global compteur_essais
     if selected_text in noms:
-<<<<<<< HEAD
         compteur_essais +=1
         if compteur_essais >= 6:
             print("perdu sale noob")
@@ -421,12 +281,6 @@ def enter_pressed(event=None):  # event=None pour gérer les appels avec ou sans
         
         create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche)
         remove_selected_item()
-=======
-        noms.remove(selected_text)
-        search_var.set("")
-        update_suggestions()
-        print(f"'{selected_text}' a été supprimé de la liste")
->>>>>>> customtkinter
 
 def create_search_bar(window, noms):
     global search_var, suggestions_list
@@ -448,7 +302,6 @@ def create_search_bar(window, noms):
     )
     search_entry.pack(side="left", fill="x", expand=True)
 
-<<<<<<< HEAD
     # Bouton d'entrer(confirmation)
     enter_button = Button(
         search_button_frame, 
@@ -456,16 +309,6 @@ def create_search_bar(window, noms):
         command= enter_pressed,
         bg="#ff9999",
         font=('Arial', 12)
-=======
-    enter_button = ctk.CTkButton(
-        search_button_frame,
-        text="Entrer",
-        font=ctk.CTkFont(size=12),
-        command=lambda: (
-            create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche),
-            remove_selected_item()
-        )
->>>>>>> customtkinter
     )
     enter_button.pack(side="right", padx=10)
 
@@ -482,20 +325,9 @@ def create_search_bar(window, noms):
     )
     suggestions_list.pack()
     suggestions_list.bind("<<ListboxSelect>>", select_suggestion)
-<<<<<<< HEAD
 
     # Bind de la touche Entrée
     Main_window.bind("<Return>", lambda event: enter_pressed())
     
-=======
-    search_entry.bind("<Return>", lambda event: remove_selected_item())
-
-def check_win_condition(info, answer):
-    return info == answer
-
-
-
-
->>>>>>> customtkinter
 Create_Welcome_page()
 Main_window.mainloop()
