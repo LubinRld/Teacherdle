@@ -7,8 +7,18 @@ Nous utilisons une base de données pour stocker les informations sur les profes
 Voici notre diagramme UML de la Base de donnée :
 ![image](https://github.com/user-attachments/assets/8e3337ae-208d-4614-b51c-7964583a9607)
 
+Dans cette base de donnée, nous avons les informations sur les professeurs, ainsi que les citations qui leurs sont associées.
+
+
+
 Voici le fonctionnement de l'algorithme de jeu :
 ![image](https://github.com/user-attachments/assets/b99424e1-ec4c-43c6-ae8e-da27575bf4c7)
+
+
+
+
+
+
 
 
 
