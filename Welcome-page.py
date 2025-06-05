@@ -1,14 +1,16 @@
 from tkinter import *
 from tkinter import ttk
+from PIL import Image
 import programme
+import customtkinter as ctk
 
-Main_window = Tk()
+Main_window = ctk.CTk()
 Main_window.title("Teacherdle")
 Main_window.geometry("1080x720")
 Main_window.iconbitmap("Logo.ico")
-Main_window.config(background='#00e1ff')
-Label_Teacherdle = Label(Main_window, text = "Teacherdle", font=("Helvetica", 40), bg='#00e1ff')
-Label_Teacherdle.pack(padx=0.5, pady=12)
+Main_window.config(background="#3B8ED0")
+Label_Teacherdle = ctk.CTkLabel(Main_window, text = "Teacherdle", text_color='black', font=("Comic Sans MS", 60), bg_color='#3B8ED0')
+Label_Teacherdle.pack(padx=0.5, pady=10)
 
 
 #global tableau_recherche
@@ -19,42 +21,44 @@ print(noms)
 
 # Fonction pour gérer l'effet de survol
 def on_enter(e, button, size):
-    button['font'] = ("Arial", size + 2)  # Augmente la taille de la police
+    button.configure(font=("Arial", size +2))  # Augmente la taille de la police
 
 def on_leave(e, button, size):
-    button['font'] = ("Arial", size)  # Rétablit la taille originale
+    button.configure(font=("Arial", size))  # Rétablit la taille originale
 
 def Create_Welcome_page():
-    Button_Frame = Frame(Main_window, bg= '#00e1ff')
-    Label_Description = Label(Main_window, text = "Devine tes profs de Polytech Dijon",font=("Helvetica", 20), bg='#00e1ff')
+    Button_Frame = Frame(Main_window, bg= '#3B8ED0')
+    Label_Description = ctk.CTkLabel(Main_window, text = "Devine tes profs de Polytech Dijon", text_color="black", font=("Comis Sans MS", 20), bg_color='#3B8ED0')
     Label_Description.pack(padx=0.5, pady=0.5)
     
-    Classique_button = Button(Button_Frame, text = "Classique", font=("Arial", 30), bg='#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page(), init_compteur(), create_data()))
-    Classique_button.pack(padx=10, pady=0)
-    Classique_button.bind("<Enter>", lambda e, b=Classique_button: on_enter(e, b, 30))
-    Classique_button.bind("<Leave>", lambda e, b=Classique_button: on_leave(e, b, 30))
-    
-    Citation_button = Button(Button_Frame, text = "Citation", font=("Arial", 30), bg= '#00e1ff', width=10, command=lambda:(Button_Frame.destroy(), Label_Description.destroy()))
-    Citation_button.pack(padx=10, pady=50)
-    Citation_button.bind("<Enter>", lambda e, b=Citation_button: on_enter(e, b, 30))
-    Citation_button.bind("<Leave>", lambda e, b=Citation_button: on_leave(e, b, 30))
-    Button_Frame.pack(padx=10, pady=70)
+    classiquebtn_image = ctk.CTkImage(Image.open('point-dinterrogation.png'), size=(40, 40))
+
+    Classique_button = ctk.CTkButton(Button_Frame, text = "Classique", image=classiquebtn_image, compound = 'left', font=("Arial", 40), bg_color='#3B8ED0', width=320, height=70, anchor='w', command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page(), init_compteur(), create_data()))
+    Classique_button.pack(pady=60)
+    Classique_button.bind("<Enter>", lambda e, b=Classique_button: on_enter(e, b, 40))
+    Classique_button.bind("<Leave>", lambda e, b=Classique_button: on_leave(e, b, 40))
+    citationbtn_image = ctk.CTkImage(Image.open('discuter.png'), size= (40, 40))
+    Citation_button = ctk.CTkButton(Button_Frame, text = "Citation", image = citationbtn_image, compound='left', font=("Arial", 40), bg_color= '#3B8ED0', width=320, height=70, anchor='w', command=lambda:(Button_Frame.destroy(), Label_Description.destroy()))
+    Citation_button.pack(padx=10, pady=0)
+    Citation_button.bind("<Enter>", lambda e, b=Citation_button: on_enter(e, b, 40))
+    Citation_button.bind("<Leave>", lambda e, b=Citation_button: on_leave(e, b, 40))
+    Button_Frame.pack(padx=100, pady=70)
 
 def init_compteur():
     global compteur_essais
     compteur_essais = 0
 
 def Create_Classic_page():
-    Classic_frame = Frame(Main_window, bg= '#00e1ff')
+    Classic_frame = Frame(Main_window, bg= '#3B8ED0')
     Menu_Buton = Button(Classic_frame, text="Menu Principal", font=("Arial", 10), bg = 'purple', command=lambda:(Classic_frame.destroy(), Create_Welcome_page()))
     Menu_Buton.pack(anchor='nw', padx=100, pady=10)
     Classic_frame.pack(fill="both", expand=True)
     create_search_bar(Classic_frame, noms)
-    table_container = Frame(Classic_frame, bg='#00e1ff')
+    table_container = Frame(Classic_frame, bg='#3B8ED0')
     table_container.pack(fill=BOTH, expand=True,padx=20, pady=10)
     create_table(table_container)
     global lignes_container
-    lignes_container = Frame(Classic_frame, bg='#00e1ff')
+    lignes_container = Frame(Classic_frame, bg='#3B8ED0')
     lignes_container.pack(fill=BOTH, expand=True)
     global current_row
     current_row=1
