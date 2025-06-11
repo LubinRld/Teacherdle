@@ -19,8 +19,8 @@ Main_window.config(background="#3B8ED0")
 Label_Teacherdle = ctk.CTkLabel(Main_window, text = "Teacherdle", text_color='black', font=("Comic Sans MS", 60), bg_color='#3B8ED0')
 Label_Teacherdle.pack(padx=0.5, pady=10)
 global x
-
-
+global citation
+citation = programme.choix_citations()
 def show_win_animation():
     # frame_win frame on the main window
     frame_win = ctk.CTkFrame(Main_window, fg_color="white", corner_radius=0)
@@ -125,12 +125,12 @@ def Create_Welcome_page():
     
     classiquebtn_image = ctk.CTkImage(Image.open('point-dinterrogation.png'), size=(40, 40))
 
-    Classique_button = ctk.CTkButton(Button_Frame, text = "Classique", image=classiquebtn_image, compound = 'left', font=("Arial", 40), bg_color='#3B8ED0', width=320, height=70, anchor='w', command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page(), init_compteur(), create_data()))
+    Classique_button = ctk.CTkButton(Button_Frame, text = "Classique", image=classiquebtn_image, compound = 'left', font=("Arial", 40), bg_color='#3B8ED0', width=320, height=70, anchor='w', command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page(), init_compteur(), create_data_Classic_()))
     Classique_button.pack(pady=60)
     Classique_button.bind("<Enter>", lambda e, b=Classique_button: on_enter(e, b, 40))
     Classique_button.bind("<Leave>", lambda e, b=Classique_button: on_leave(e, b, 40))
     citationbtn_image = ctk.CTkImage(Image.open('discuter.png'), size= (40, 40))
-    Citation_button = ctk.CTkButton(Button_Frame, text = "Citation", image = citationbtn_image, compound='left', font=("Arial", 40), bg_color= '#3B8ED0', width=320, height=70, anchor='w', command=lambda:(Button_Frame.destroy(), Label_Description.destroy()))
+    Citation_button = ctk.CTkButton(Button_Frame, text = "Citation", image = citationbtn_image, compound='left', font=("Arial", 40), bg_color= '#3B8ED0', width=320, height=70, anchor='w', command=lambda:(Button_Frame.destroy(), Label_Description.destroy(),Create_Citations_page(), init_compteur(), create_data_Citations_()))
     Citation_button.pack(padx=10, pady=0)
     Citation_button.bind("<Enter>", lambda e, b=Citation_button: on_enter(e, b, 40))
     Citation_button.bind("<Leave>", lambda e, b=Citation_button: on_leave(e, b, 40))
@@ -158,6 +158,28 @@ def Create_Classic_page():
     global current_row
     current_row = 1
 
+def Create_Citations_page():
+    Citation_frame = ctk.CTkFrame(Main_window, fg_color="#3B8ED0", corner_radius=0)
+    print(citation[0][1])
+    Label_Description_cit = ctk.CTkLabel(Main_window, text = "Devine qui a dit : '{}'".format(citation[0][1],), text_color="black", font = ctk.CTkFont("Comis Sans MS", 20), bg_color='#3B8ED0')
+    Label_Description_cit.pack(padx=0.5, pady=0.5)
+    Menu_Buton = ctk.CTkButton(Citation_frame, text="Menu Principal", font=ctk.CTkFont(size=20), fg_color="#6062f9", command=lambda:(Citation_frame.destroy(), Create_Welcome_page()))
+    Menu_Buton.pack(anchor='nw', padx=100, pady=10)
+    Citation_frame.pack(fill="both", expand=True)
+    create_search_bar_citations(Citation_frame, noms)
+
+    table_container = ctk.CTkFrame(Citation_frame, fg_color="#3B8ED0", corner_radius=0)
+    table_container.pack(fill="both", expand=True, padx=20, pady=10)
+    create_table_citation(table_container)
+
+    global lignes_container
+    lignes_container = ctk.CTkFrame(Citation_frame, fg_color="#3B8ED0", corner_radius=0)
+    lignes_container.pack(fill="both", expand=True)
+
+    global current_row
+    current_row = 1
+
+
 def create_table(parent):
     global table_frame
     table_frame = ctk.CTkFrame(parent, fg_color="white", corner_radius=8)
@@ -179,6 +201,29 @@ def create_table(parent):
         )
         header.grid(row=0, column=col, sticky="nsew", padx=5, pady=5)
         table_frame.grid_columnconfigure(col, weight=1)
+
+
+def create_table_citation(parent):
+    global table_frame_citation
+    table_frame_citation = ctk.CTkFrame(parent, fg_color="white", corner_radius=8)
+    table_frame_citation.pack(fill="both", padx=200, pady=0)
+
+    categories = ["Professeur"]
+    for col in range(len(categories)):
+        table_frame_citation.grid_columnconfigure(col, weight=1)
+    for col, title in enumerate(categories):
+        header = ctk.CTkLabel(
+            table_frame_citation,
+            text=title,
+            font=ctk.CTkFont(family="Arial", size=16, weight="bold"),
+            fg_color="white",
+            text_color="black",
+            padx=15,
+            pady=10,
+            corner_radius=0
+        )
+        header.grid(row=0, column=col, sticky="nsew", padx=5, pady=5)
+        table_frame_citation.grid_columnconfigure(col, weight=1)
 
 def create_answer(data, tableau_recherche):
     global current_row
@@ -208,7 +253,38 @@ def create_answer(data, tableau_recherche):
         case.grid(row=current_row, column=col, sticky="nsew", padx=1, pady=5)
 
     current_row += 1
+    
+    
+def create_answer_citations(guess, citation):
+    print(guess)
+    print(citation)
+    global current_row
+    global compteur_essais
+    if compteur_essais >= 6:
+        return 0  # défaite
 
+    donnees = citation
+    reussi = 0
+    answer = donnees[0][2]
+    if guess == answer:
+        reussi += 1
+    if reussi == 6:
+        show_win_animation()  # VICTOIRE
+
+    case = ctk.CTkLabel(
+        table_frame_citation,
+        text=guess,
+        fg_color=create_color(guess, answer),
+        text_color="black",
+        font=ctk.CTkFont(size=14),
+        width=500,
+        height=30,
+        corner_radius=8
+    )
+    case.grid(row=current_row, column=0, sticky="nsew", padx=0, pady=0)
+    current_row +=1
+    
+    
 def create_fleche(info, answer):
     num = 0
     arrow = ''
@@ -220,6 +296,8 @@ def create_fleche(info, answer):
             arrow = ' ▼'
         elif answer > info:
             arrow = ' ▲'
+    if answer == 'NON':
+        arrow = ''
     return arrow
 
 def create_color(info, answer):
@@ -237,10 +315,16 @@ def create_color(info, answer):
         bg = "#66ff66"  # vert clair
     return bg
 
-def create_data():
+def create_data_Classic_():
     global noms, tableau_recherche
     noms = programme.envoie_noms()
     tableau_recherche = programme.choix_prof()
+    
+    
+def create_data_Citations_():
+    global noms, citation
+    noms = programme.envoie_noms()
+    
 
 def update_suggestions(*args):
     search_term = search_var.get().lower()
@@ -272,9 +356,20 @@ def remove_selected_item():
             print(f"'{selected_text}' a été supprimé de la liste")
 
 def enter_pressed(event=None):
+    if citation != '':
+        enter_pressed_citation()
+    else:
+        if search_var.get():
+            create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche)
+            remove_selected_item()
+
+def enter_pressed_citation(event=None):
+    global citation
     if search_var.get():
-        create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche)
+        create_answer_citations(search_var.get(), citation)
         remove_selected_item()
+
+
 
 def create_search_bar(window, noms):
     global search_var, suggestions_list
@@ -324,9 +419,60 @@ def create_search_bar(window, noms):
         relief="solid",
         selectbackground='#00e1ff'
     )
+def create_search_bar_citations(window, noms):
+    global search_var, suggestions_list
+
+    search_var = ctk.StringVar() # Variable pour stocker le texte de recherche
+    search_var.trace_add("write", lambda *args: update_suggestions()) # trace est une méthode qui "espionne" la variable. Dès qu'elle est modifiée, elle appelle une fonction.
+
+    main_frame = ctk.CTkFrame(window, fg_color=None)
+    main_frame.pack(padx=40, pady=40)
+
+    search_button_frame = ctk.CTkFrame(main_frame, fg_color=None)
+    search_button_frame.pack(fill="x", pady=(0, 15))
+
+    # Barre de recherche
+    search_entry = ctk.CTkEntry(
+        search_button_frame,
+        textvariable=search_var,
+        width=100,
+        font=ctk.CTkFont(family='Arial', size=18)
+    )
+    search_entry.pack(side="left", fill="x", expand=True)
+
+    # Bouton d'entrer (comfirmation)
+    enter_button = ctk.CTkButton(
+        search_button_frame,
+        text="Entrer",
+        command=enter_pressed,
+        bg_color="#6062f9",
+        fg_color="#6062f9",
+        font=ctk.CTkFont(family='Arial', size=16),
+        width=100,
+        height=40
+    )
+    enter_button.pack(side="right", padx=(15, 0))
+
+    # Liste de suggestions
+    suggestions_frame = ctk.CTkFrame(main_frame, fg_color=None)
+    suggestions_frame.pack(fill="x")
+    suggestions_list = Listbox(
+        suggestions_frame,
+        width=50,
+        height=8,
+        font=('Arial', 25),  # Plus gros
+        bg='white',
+        activestyle='dotbox',
+        highlightthickness=2,
+        relief="solid",
+        selectbackground='#00e1ff'
+    )
+
+
     suggestions_list.pack(fill="x", pady=(5, 0))
 
     suggestions_list.bind("<<ListboxSelect>>", select_suggestion)
+
 
     Main_window.bind("<Return>", lambda event: enter_pressed())
 

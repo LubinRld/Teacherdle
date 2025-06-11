@@ -18,6 +18,14 @@ def get_infos_prof(nom):
         infos_finales.append(list(i[1:]))
     return infos_finales
 
+def choix_citations():
+    a = random.randint(0,11)
+    citation = cu.execute("SELECT * from Citations WHERE id_cit=?",(a,))
+    citation_filtrees = citation.fetchall()
+    print(citation_filtrees)
+    
+    return citation_filtrees
+
 def envoie_noms():
     teacher_list = []
     noms = cu.execute("""SELECT nom FROM Teachers""")
@@ -43,6 +51,10 @@ def choix_prof():
     cible = get_infos_prof(PROF_RECHERCHE[1])[0]
     
     return cible
+
+
+a = choix_citations()
+
 
 """
     win = 0
