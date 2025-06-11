@@ -38,7 +38,7 @@ def show_win_animation():
     # Close animation button
     close_button = ctk.CTkButton(
         frame_win,
-        text="Continuer",
+        text="Voir résultats",
         font=ctk.CTkFont(size=16),
         command=frame_win.destroy
     )
