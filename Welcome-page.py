@@ -163,7 +163,7 @@ def Create_Citations_page():
     print(citation[0][1])
     Label_Description_cit = ctk.CTkLabel(Main_window, text = "Devine qui a dit : '{}'".format(citation[0][1],), text_color="black", font = ctk.CTkFont("Comis Sans MS", 20), bg_color='#3B8ED0')
     Label_Description_cit.pack(padx=0.5, pady=0.5)
-    Menu_Buton = ctk.CTkButton(Citation_frame, text="Menu Principal", font=ctk.CTkFont(size=20), fg_color="#6062f9", command=lambda:(Citation_frame.destroy(), Create_Welcome_page()))
+    Menu_Buton = ctk.CTkButton(Citation_frame, text="Menu Principal", font=ctk.CTkFont(size=20), fg_color="#6062f9", command=lambda:(Citation_frame.destroy(), Create_Welcome_page(),Label_Description_cit.destroy()))
     Menu_Buton.pack(anchor='nw', padx=100, pady=10)
     Citation_frame.pack(fill="both", expand=True)
     create_search_bar_citations(Citation_frame, noms)
