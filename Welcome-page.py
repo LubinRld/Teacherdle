@@ -1,5 +1,5 @@
 import customtkinter as ctk
-import programme
+import fonctions_bdd
 import customtkinter as ctk
 from tkinter import *
 from PIL import Image
@@ -14,7 +14,7 @@ ctk.set_default_color_theme("blue")  # Thème bleu
 Main_window = ctk.CTk()
 Main_window.title("Teacherdle")
 Main_window.geometry("1080x720")
-Main_window.iconbitmap("Logo.ico")
+Main_window.iconbitmap("assets/Logo.ico")
 Main_window.config(background="#3B8ED0")
 Label_Teacherdle = ctk.CTkLabel(Main_window, text = "Teacherdle", text_color='black', font=("Comic Sans MS", 60), bg_color='#3B8ED0')
 Label_Teacherdle.pack(padx=0.5, pady=10)
@@ -107,8 +107,8 @@ def show_defeat_animation(correct_answer):
     )
     retry_button.place(relx=0.5, rely=0.7, anchor="center")
 
-tableau_recherche = programme.choix_prof()
-noms = programme.envoie_noms()
+tableau_recherche = fonctions_bdd.choix_prof()
+noms = fonctions_bdd.envoie_noms()
 print(noms)
 
 # Effet survol bouton
@@ -123,13 +123,13 @@ def Create_Welcome_page():
     Label_Description = ctk.CTkLabel(Main_window, text = "Devine tes profs de Polytech Dijon", text_color="black", font = ctk.CTkFont("Comis Sans MS", 20), bg_color='#3B8ED0')
     Label_Description.pack(padx=0.5, pady=0.5)
     
-    classiquebtn_image = ctk.CTkImage(Image.open('point-dinterrogation.png'), size=(40, 40))
+    classiquebtn_image = ctk.CTkImage(Image.open('assets/point-dinterrogation.png'), size=(40, 40))
 
     Classique_button = ctk.CTkButton(Button_Frame, text = "Classique", image=classiquebtn_image, compound = 'left', font=("Arial", 40), bg_color='#3B8ED0', width=320, height=70, anchor='w', command=lambda:(Button_Frame.destroy(), Label_Description.destroy(), Create_Classic_page(), init_compteur(), create_data()))
     Classique_button.pack(pady=60)
     Classique_button.bind("<Enter>", lambda e, b=Classique_button: on_enter(e, b, 40))
     Classique_button.bind("<Leave>", lambda e, b=Classique_button: on_leave(e, b, 40))
-    citationbtn_image = ctk.CTkImage(Image.open('discuter.png'), size= (40, 40))
+    citationbtn_image = ctk.CTkImage(Image.open('assets/discuter.png'), size= (40, 40))
     Citation_button = ctk.CTkButton(Button_Frame, text = "Citation", image = citationbtn_image, compound='left', font=("Arial", 40), bg_color= '#3B8ED0', width=320, height=70, anchor='w', command=lambda:(Button_Frame.destroy(), Label_Description.destroy()))
     Citation_button.pack(padx=10, pady=0)
     Citation_button.bind("<Enter>", lambda e, b=Citation_button: on_enter(e, b, 40))
@@ -239,8 +239,8 @@ def create_color(info, answer):
 
 def create_data():
     global noms, tableau_recherche
-    noms = programme.envoie_noms()
-    tableau_recherche = programme.choix_prof()
+    noms = fonctions_bdd.envoie_noms()
+    tableau_recherche = fonctions_bdd.choix_prof()
 
 def update_suggestions(*args):
     search_term = search_var.get().lower()
@@ -273,7 +273,7 @@ def remove_selected_item():
 
 def enter_pressed(event=None):
     if search_var.get():
-        create_answer(programme.get_infos_prof(search_var.get()), tableau_recherche)
+        create_answer(fonctions_bdd.get_infos_prof(search_var.get()), tableau_recherche)
         remove_selected_item()
 
 def create_search_bar(window, noms):
