@@ -26,7 +26,7 @@ class WelcomePage:
         self.classic_button.bind("<Leave>", lambda e: self.classic_button.configure(font=("Arial", 40)))
         self.frame.pack(padx=100, pady=70)
         
-        def destroy(self):
+    def destroy(self):
             self.label.destroy()
             self.frame.destroy()
 
@@ -110,4 +110,5 @@ class ClassicPage:
             print(f"Tentative {self.compteur_essais} : {nom}")
             self.search_var.set("")
             self.update_suggestions()
+
 
