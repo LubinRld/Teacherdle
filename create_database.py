@@ -63,6 +63,16 @@ def initialisation_table(connection,cursor):
     ("Vous êtes vraiments des têtes de pioches en calcul algébrique, on se demande ce qui a été fait dans le secondaire","SALOMON"),
     ("Et du coup vous savez pourquoi ? .... Et bah c'est ca le problème.","RITON"),
     ("Jvois ce que t'as essayé de faire, mais....","RITON"),
-    ("Jvais vous faire la guerre","WEEBER");
+    ("Vous n'avez pas le droit d'enregistrer ma voix","MORPHU"),
+    ("Posez moi vos questions, jsuis payé une fortune pour y répondre","CHAMBRION"),
+    ("Y a aucun collègue qui me fait marrrer, je les déteste tous","MEUNIER"),
+    ("Le polynôme il est SAINGDÉ","VAGO"),
+    ("On est tous déja passé sous des lignes Hautes Tensions en entendant ce bruit CARACTÉRISTIQUE","WEEBER"),
+    ("LE BRAINNNNSSTTTOOOORMIIIIIIIIIINNNNNNGGG","VAGO"),
+    ("Nan mais votre schéma il est merdique là", "SALOMON"),
+    ("Je préfère voir les lapins plutôt que vous", "PETITJEAN"),
+    ("Ça fait partit de ces séances clefs", "WEEBER"),
+    ("Et toi t'es le support émotionnel?","CHASSEL")
+    ;
     """)
     connection.commit()
