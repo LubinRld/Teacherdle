@@ -8,8 +8,10 @@ import random
 class WelcomePage:
     def __init__(self, master, start_classic_callback):
         self.frame = Frame(master, bg="#3B8ED0")
-        self.label = ctk.CTkLabel(master, text="Devine tes profs de Polytech Dijon", text_color="black", font=ctk.CTkFont("Comic Sans MS", 20), bg_color='#3B8ED0')
+        self.label = ctk.CTkLabel(master, text="Teacherdle", text_color="black", font=("Comic Sans MS", 60), bg_color='#3B8ED0')
         self.label.pack(padx=0.5, pady=0.5)
+        self.label2 = ctk.CTkLabel(master, text="Devine tes profs de Polytech Dijon", text_color="black", font=ctk.CTkFont("Comic Sans MS", 20), bg_color='#3B8ED0')
+        self.label2.pack(padx=0.5, pady=0.5)
         classic_btn_img = ctk.CTkImage(Image.open("assets/point-dinterrogation.png"), size=(40, 40))
         self.classic_button = ctk.CTkButton(
             self.frame,
@@ -30,6 +32,7 @@ class WelcomePage:
         
     def destroy(self):
             self.label.destroy()
+            self.label2.destroy()
             self.frame.destroy()
 
 class ClassicPage:
@@ -42,6 +45,10 @@ class ClassicPage:
         self.search_var = ctk.StringVar()
 
         self.frame = ctk.CTkFrame(master, fg_color="#3B8ED0", corner_radius=0)
+        self.label = ctk.CTkLabel(master, text="Teacherdle", text_color="black", font=("Comic Sans MS", 60), bg_color='#3B8ED0')
+        self.label.pack(padx=0.5, pady=0.5)
+        self.label2 = ctk.CTkLabel(master, text="Devine tes profs de Polytech Dijon", text_color="black", font=ctk.CTkFont("Comic Sans MS", 20), bg_color='#3B8ED0')
+        self.label2.pack(padx=0.5, pady=0.5)
         self.frame.pack(fill="both", expand=True)
 
         self.menu_button = ctk.CTkButton(self.frame, text="Menu Principal", font=ctk.CTkFont(size=20), fg_color="#6062f9", command=back_callback)
@@ -51,6 +58,8 @@ class ClassicPage:
         self.create_table()
 
     def destroy(self):
+        self.label.destroy()
+        self.label2.destroy()
         self.frame.destroy()
 
     def create_table(self):
