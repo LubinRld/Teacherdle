@@ -101,7 +101,7 @@ def show_defeat_animation(correct_answer):
 
     retry_button = ctk.CTkButton(
         frame_defeat,
-        text="Réessayer",
+        text="Retour aux réponses",
         font=ctk.CTkFont(size=16),
         command=lambda: (frame_defeat.destroy())
     )
@@ -337,9 +337,25 @@ def update_suggestions(*args):
         for word in suggestions:
             suggestions_list.insert(ctk.END, word)
 
+def update_suggestions_citation(*args):
+    search_term = search_var.get().lower()
+    if not search_term:
+        suggestions_list_citation.pack_forget()
+    else:
+        suggestions_list_citation.pack()
+        suggestions_list_citation.delete(0, ctk.END)
+        suggestions = [word for word in noms if word.lower().startswith(search_term)]
+        for word in suggestions:
+            suggestions_list_citation.insert(ctk.END, word)
+
 def select_suggestion(event):
     if suggestions_list.curselection():
         selected = suggestions_list.get(suggestions_list.curselection())
+        search_var.set(selected)
+        
+def select_suggestion_citation(event):
+    if suggestions_list_citation.curselection():
+        selected = suggestions_list_citation.get(suggestions_list_citation.curselection())
         search_var.set(selected)
 
 def remove_selected_item():
@@ -349,6 +365,21 @@ def remove_selected_item():
         compteur_essais += 1
         if compteur_essais >= 6:
             show_defeat_animation(tableau_recherche)
+        else:
+            noms.remove(selected_text)
+            search_var.set("")
+            update_suggestions()
+            print(f"'{selected_text}' a été supprimé de la liste")
+
+def remove_selected_item_citation():
+    selected_text = search_var.get()
+    global citation
+    print(citation)
+    global compteur_essais
+    if selected_text in noms:
+        compteur_essais += 1
+        if compteur_essais >= 6:
+            show_defeat_animation(citation)
         else:
             noms.remove(selected_text)
             search_var.set("")
@@ -367,7 +398,7 @@ def enter_pressed_citation(event=None):
     global citation
     if search_var.get():
         create_answer_citations(search_var.get(), citation)
-        remove_selected_item()
+        remove_selected_item_citation()
 
 
 
@@ -411,8 +442,8 @@ def create_search_bar(window, noms):
     suggestions_list = Listbox(
         suggestions_frame,
         width=50,
-        height=8,
-        font=('Arial', 25),  # Plus gros
+        height=4,
+        font=('Arial', 20),  # Plus gros
         bg='white',
         activestyle='dotbox',
         highlightthickness=2,
@@ -420,10 +451,10 @@ def create_search_bar(window, noms):
         selectbackground='#00e1ff'
     )
 def create_search_bar_citations(window, noms):
-    global search_var, suggestions_list
+    global search_var, suggestions_list_citation
 
     search_var = ctk.StringVar() # Variable pour stocker le texte de recherche
-    search_var.trace_add("write", lambda *args: update_suggestions()) # trace est une méthode qui "espionne" la variable. Dès qu'elle est modifiée, elle appelle une fonction.
+    search_var.trace_add("write", lambda *args: update_suggestions_citation()) # trace est une méthode qui "espionne" la variable. Dès qu'elle est modifiée, elle appelle une fonction.
 
     main_frame = ctk.CTkFrame(window, fg_color=None)
     main_frame.pack(padx=40, pady=40)
@@ -456,21 +487,21 @@ def create_search_bar_citations(window, noms):
     # Liste de suggestions
     suggestions_frame = ctk.CTkFrame(main_frame, fg_color=None)
     suggestions_frame.pack(fill="x")
-    suggestions_list = Listbox(
+    suggestions_list_citation = Listbox(
         suggestions_frame,
         width=50,
-        height=8,
-        font=('Arial', 25),  # Plus gros
+        height=6,
+        font=('Arial', 20),  # Plus gros
         bg='white',
         activestyle='dotbox',
         highlightthickness=2,
         relief="solid",
         selectbackground='#00e1ff'
     )
-
-
+    suggestions_list_citation.pack(fill="x", pady=(5, 0))
+    suggestions_list_citation.bind("<<ListBoxSelect>>",select_suggestion_citation)
+    
     suggestions_list.pack(fill="x", pady=(5, 0))
-
     suggestions_list.bind("<<ListboxSelect>>", select_suggestion)
 
 
