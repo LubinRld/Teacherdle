@@ -34,7 +34,7 @@ def nombres_profs():
     
 def choix_prof():
 #fin de la mise en place, on commence le jeu
-    a = random.randint(1,26)    #choix d un id de professeur aléatoire
+    a = random.randint(1,31)    #choix d un id de professeur aléatoire
     objectif = cu.execute("SELECT * from Teachers WHERE id={}".format(a)) 
     print(cu)
     nom_objectif = objectif.fetchall()   #on récupère le nom du professeur "cible" et on le montre pour l'instant
@@ -44,7 +44,7 @@ def choix_prof():
     
     return cible
 def choix_citations():
-    a = random.randint(0,11)
+    a = random.randint(1,15)
     citation = cu.execute("SELECT * from Citations WHERE id_cit=?",(a,))
     citation_filtrees = citation.fetchall()
     print(citation_filtrees)

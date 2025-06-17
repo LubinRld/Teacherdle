@@ -152,7 +152,7 @@ class CitationPage:
         # Ajoutez autant d'images que nécessaire
         ]
     
-        for _ in range(1000):
+        for _ in range(100):
         # Choisir une image aléatoire
             image = random.choice(confetti_images)
         
