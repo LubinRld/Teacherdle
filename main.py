@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from tkinter import * 
 import fonctions_bdd as bd
-from create_widget import ClassicPage, WelcomePage
+from create_widget import ClassicPage, WelcomePage, CitationPage
 from PIL import Image
 
 class TeacherdleApp:
@@ -26,8 +26,8 @@ class TeacherdleApp:
         self.clear_current_page()
         self.current_page=WelcomePage(
             master=self.window,
-            start_classic_callback=self.show_classic_page
-            
+            start_classic_callback=self.show_classic_page,
+            start_citation_callback=self.show_citation_page
         )
     
     def show_classic_page(self):
@@ -40,6 +40,15 @@ class TeacherdleApp:
             prof_cible=self.prof_cible,
             back_callback=self.show_welcome_page
         )
-
+    def show_citation_page(self):
+        self.clear_current_page()
+        self.noms= bd.envoie_noms()
+        self.citation=bd.choix_citations()
+        self.current_page = CitationPage(
+            master=self.window,
+            noms=self.noms,
+            citation=self.citation,
+            back_callback=self.show_welcome_page
+        )
 if __name__=="__main__":
     TeacherdleApp()
