@@ -43,7 +43,17 @@ def choix_prof():
     cible = get_infos_prof(PROF_RECHERCHE[1])[0]
     
     return cible
-
+def choix_citations():
+    a = random.randint(0,11)
+    citation = cu.execute("SELECT * from Citations WHERE id_cit=?",(a,))
+    citation_filtrees = citation.fetchall()
+    print(citation_filtrees)
+    
+    return citation_filtrees
+a = choix_citations()
+print(a)
+b = choix_prof()
+print(b)
 """
     win = 0
     nbr_essais = 5
