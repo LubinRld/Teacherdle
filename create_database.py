@@ -61,7 +61,7 @@ def initialisation_table(connection,cursor):
     ("En un mot, tout est dit","SALOMON"),
     ("SQÉLITE","CHASSEL"),
     ("Vous êtes vraiments des têtes de pioches en calcul algébrique, on se demande ce qui a été fait dans le secondaire","SALOMON"),
-    ("Et du coup vous savez pourquoi ? .... Et bah c'est ca le problème, c'est que vous savez pas.","RITON"),
+    ("Et du coup vous savez pourquoi ? .... Et bah c'est ca le problème.","RITON"),
     ("Jvois ce que t'as essayé de faire, mais....","RITON"),
     ("Jvais vous faire la guerre","WEEBER");
     """)

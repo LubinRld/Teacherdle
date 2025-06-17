@@ -198,7 +198,7 @@ class CitationPage:
 
         reveal_label = ctk.CTkLabel(
             frame_defeat,
-            text=f"La bonne réponse était :\n{self.citation}",
+            text=f"La bonne réponse était :\n{self.citation[0][2]}",
             font=ctk.CTkFont(size=20),
             text_color="white",
             justify="center"
