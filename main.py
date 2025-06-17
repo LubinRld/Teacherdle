@@ -13,8 +13,6 @@ class TeacherdleApp:
         self.window.geometry("1080x720")
         self.window.iconbitmap("assets/Logo.ico")
         self.window.config(background='#3B8ED0')
-        self.noms=bd.envoie_noms() 
-        self.prof_cible=bd.choix_prof()
         self.current_page = None
         self.show_welcome_page()
         self.window.mainloop()
@@ -29,6 +27,7 @@ class TeacherdleApp:
         self.current_page=WelcomePage(
             master=self.window,
             start_classic_callback=self.show_classic_page
+            
         )
     
     def show_classic_page(self):

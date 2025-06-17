@@ -37,12 +37,13 @@ class WelcomePage:
 
 class ClassicPage:
     def __init__(self, master, noms, prof_cible, back_callback):
-        self.master = master
+        self.master = master 
         self.noms = noms
         self.prof_cible = prof_cible
         self.compteur_essais = 0
         self.current_row = 1
         self.search_var = ctk.StringVar()
+        self.back_callback = back_callback
 
         self.frame = ctk.CTkFrame(master, fg_color="#3B8ED0", corner_radius=0)
         self.label = ctk.CTkLabel(master, text="Teacherdle", text_color="black", font=("Comic Sans MS", 60), bg_color='#3B8ED0')
@@ -140,11 +141,18 @@ class ClassicPage:
 
         close_button = ctk.CTkButton(
         self.frame_win,
-        text="Continuer",
+        text="Revoir vos guess",
         font=ctk.CTkFont(size=16),
         command=self.frame_win.destroy
         )
-        close_button.place(relx=0.5, rely=0.85, anchor="center")
+        close_button.place(relx=0.5, rely=0.85, anchor="w")
+        menu_button = ctk.CTkButton(
+            self.frame_win,
+            text="retour au menu",
+            font=ctk.CTkFont(size=16),
+            command=lambda: (self.frame_win.destroy(), self.back_callback())
+        )
+        menu_button.place(relx=0.5, rely=0.85, anchor="e")
 
     # Lance l’animation dans un thread
         threading.Thread(target=self.confetti_animation, daemon=True).start()
@@ -152,15 +160,16 @@ class ClassicPage:
 
     def confetti_animation(self):
         for _ in range(100):
-            label = ctk.CTkLabel(
+            if self.frame_win.winfo_exists():
+                label = ctk.CTkLabel(
                 self.frame_win,
                 text="✨",
                 font=ctk.CTkFont(size=random.randint(1, 50)),
                 bg_color="transparent",
                 text_color=random.choice(["#ff5e5e", "#f7c948", "#5ec576", "#5ea8ff", "#b15eff"])
-            )
-            label.place(x=self.get_coord_x(), y=self.get_coord_y())
-            self.frame_win.after(random.randint(800, 2000), label.destroy)
+                )
+                label.place(x=self.get_coord_x(), y=self.get_coord_y())
+                self.frame_win.after(random.randint(800, 2000), label.destroy)
 
     def get_coord_x(self):
         self.x = random.randint(20, 1040)
