@@ -31,6 +31,11 @@ def nombres_profs():
     nombre_filtrés = nombre.fetchall()
     return len(nombre_filtrés)
     
+def get_subject_prof(citation):
+    res = cu.execute("SELECT Subject FROM Teachers WHERE nom=?",(citation[0][2],))
+    subject = res.fetchall()
+    
+    return (subject[0][0])
     
 def choix_prof():
 #fin de la mise en place, on commence le jeu
@@ -54,6 +59,7 @@ a = choix_citations()
 print(a)
 b = choix_prof()
 print(b)
+print(get_subject_prof(a))
 """
     win = 0
     nbr_essais = 5
