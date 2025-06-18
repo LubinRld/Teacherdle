@@ -112,14 +112,19 @@ class CitationPage:
             corner_radius=8
         )
         label.grid(row=self.current_row, column=0, sticky="nsew", padx=1, pady=5)
-
-        if self.compteur_essais >= 6:
+        
+        if self.compteur_essais == 3:
+            self.show_hint()
+        elif self.compteur_essais >= 6:
             self.show_defeat_animation()
             return
         else:
             self.compteur_essais += 1
             self.current_row += 1
     
+    def show_hint(self):
+        
+
     def create_color(self, info, answer):
         bg = "#ff6666"  # rouge clair
         infos_split = info.split()
@@ -238,7 +243,7 @@ class CitationPage:
     def update_suggestions(self):
         search_term = self.search_var.get().lower()
         if not search_term:
-            self.suggestions_list.pack_forget()
+            self.suggestions_list.pack_forget(fill="x", pady=(5, 0))
         else:
             self.suggestions_list.pack()
             self.suggestions_list.delete(0, ctk.END)
@@ -306,7 +311,6 @@ class ClassicPage:
     
     def create_answer(self, data):
         
-
         reussi = 0
         for col, info in enumerate(data[0]):
             answer = self.prof_cible[col]
