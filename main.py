@@ -1,7 +1,10 @@
 import customtkinter as ctk
 from tkinter import * 
 import fonctions_bdd as bd
-from create_widget import ClassicPage, WelcomePage, CitationPage
+from citation_page import *
+from classic_page import *
+from welcome_page import *
+
 from PIL import Image
 
 class TeacherdleApp:
