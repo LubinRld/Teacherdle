@@ -61,10 +61,11 @@ class CitationPage:
         self.current_row = 1
         self.search_var = ctk.StringVar()
         self.frame = ctk.CTkFrame(master, fg_color="#3B8ED0", corner_radius=0)
+        self.back_callback = back_callback
 
-        self.label = ctk.CTkLabel(master, text="Teacherdle", text_color="black", font=("Comic Sans MS", 60), bg_color='#3B8ED0')
+        self.label = ctk.CTkLabel(self.frame, text="Teacherdle", text_color="black", font=("Comic Sans MS", 60), bg_color='#3B8ED0')
         self.label.pack(padx=0.5, pady=0.5)
-        self.label2 = ctk.CTkLabel(master, text="qui a dit : <<{}>>".format(citation[0][1]), text_color="black", font=ctk.CTkFont("Comic Sans MS", 20), bg_color='#3B8ED0')
+        self.label2 = ctk.CTkLabel(self.frame, text="qui a dit : <<{}>>".format(citation[0][1]), text_color="black", font=ctk.CTkFont("Comic Sans MS", 20), bg_color='#3B8ED0')
         self.label2.pack(padx=0.5, pady=0.5)
         self.menu_button = ctk.CTkButton(self.frame, text="Menu Principal", font=ctk.CTkFont(size=20), fg_color="#6062f9", command=back_callback)
         self.menu_button.pack(anchor='nw', padx=100, pady=10)
@@ -147,40 +148,34 @@ class CitationPage:
         return bg
         
     def show_win_animation(self):
-        self.frame_win = ctk.CTkFrame(self.master, fg_color="white", corner_radius=0)
-        self.frame_win.place(relx=0, rely=0, relwidth=1, relheight=1)
-
-        congrats_label = ctk.CTkLabel(
-        self.frame_win,
-        text="🎉 Bravo ! Tu as deviné 🎉",
-        font=ctk.CTkFont(size=32, weight="bold"),
-        text_color="green"
-        )
-        congrats_label.place(relx=0.5, rely=0.4, anchor="center")
-
-        close_button = ctk.CTkButton(
-        self.frame_win,
-        text="Continuer",
-        font=ctk.CTkFont(size=16),
-        command=self.frame_win.destroy
-        )
-        close_button.place(relx=0.5, rely=0.85, anchor="center")
-
-    # Lance l’animation dans un thread
         threading.Thread(target=self.confetti_animation, daemon=True).start()
 
-
     def confetti_animation(self):
+    # Charger les images de confettis (remplacez par vos chemins d'accès)
+        confetti_images = [
+            ctk.CTkImage(Image.open("assets/Spakles_Red.png"), size=(40, 40)),
+            ctk.CTkImage(Image.open("assets/Spakles_Blue.png"), size=(50, 50)),
+            ctk.CTkImage(Image.open("assets/Spakles_Yellow.png"), size=(35, 35)),
+            ctk.CTkImage(Image.open("assets/Spakles_Pink.png"), size=(30, 30)),
+            ctk.CTkImage(Image.open("assets/Spakles_Green.png"), size=(50, 50)),
+            ctk.CTkImage(Image.open("assets/Spakles_Orange.png"), size=(45, 45))
+
+        # Ajoutez autant d'images que nécessaire
+        ]
+    
         for _ in range(100):
+        # Choisir une image aléatoire
+            image = random.choice(confetti_images)
+        
             label = ctk.CTkLabel(
-                self.frame_win,
-                text="✨",
-                font=ctk.CTkFont(size=random.randint(1, 50)),
+                self.frame, # Pas de texte
+                text="",
+                image=image,
                 bg_color="transparent",
-                text_color=random.choice(["#ff5e5e", "#f7c948", "#5ec576", "#5ea8ff", "#b15eff"])
+                fg_color="transparent"
             )
             label.place(x=self.get_coord_x(), y=self.get_coord_y())
-            self.frame_win.after(random.randint(800, 2000), label.destroy)
+            self.frame.after(random.randint(800, 2000), label.destroy)
 
     def get_coord_x(self):
         self.x = random.randint(20, 1040)
@@ -277,12 +272,13 @@ class CitationPage:
 
 class ClassicPage:
     def __init__(self, master, noms, prof_cible, back_callback):
-        self.master = master
+        self.master = master 
         self.noms = noms
         self.prof_cible = prof_cible
         self.compteur_essais = 0
         self.current_row = 1
         self.search_var = ctk.StringVar()
+        self.back_callback = back_callback
 
         self.frame = ctk.CTkFrame(master, fg_color="#3B8ED0", corner_radius=0)
         self.label = ctk.CTkLabel(master, text="Teacherdle", text_color="black", font=("Comic Sans MS", 60), bg_color='#3B8ED0')
@@ -379,11 +375,18 @@ class ClassicPage:
 
         close_button = ctk.CTkButton(
         self.frame_win,
-        text="Continuer",
+        text="Revoir vos guess",
         font=ctk.CTkFont(size=16),
         command=self.frame_win.destroy
         )
-        close_button.place(relx=0.5, rely=0.85, anchor="center")
+        close_button.place(relx=0.5, rely=0.85, anchor="w")
+        menu_button = ctk.CTkButton(
+            self.frame_win,
+            text="retour au menu",
+            font=ctk.CTkFont(size=16),
+            command=lambda: (self.frame_win.destroy(), self.back_callback())
+        )
+        menu_button.place(relx=0.5, rely=0.85, anchor="e")
 
     # Lance l’animation dans un thread
         threading.Thread(target=self.confetti_animation, daemon=True).start()
@@ -391,15 +394,16 @@ class ClassicPage:
 
     def confetti_animation(self):
         for _ in range(100):
-            label = ctk.CTkLabel(
+            if self.frame_win.winfo_exists():
+                label = ctk.CTkLabel(
                 self.frame_win,
                 text="✨",
                 font=ctk.CTkFont(size=random.randint(1, 50)),
                 bg_color="transparent",
                 text_color=random.choice(["#ff5e5e", "#f7c948", "#5ec576", "#5ea8ff", "#b15eff"])
-            )
-            label.place(x=self.get_coord_x(), y=self.get_coord_y())
-            self.frame_win.after(random.randint(800, 2000), label.destroy)
+                )
+                label.place(x=self.get_coord_x(), y=self.get_coord_y())
+                self.frame_win.after(random.randint(800, 2000), label.destroy)
 
     def get_coord_x(self):
         self.x = random.randint(20, 1040)
