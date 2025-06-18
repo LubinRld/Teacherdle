@@ -123,7 +123,13 @@ class CitationPage:
             self.current_row += 1
     
     def show_hint(self):
-        
+        subject = get_subject_prof(self.citation)
+        HintLabel = ctk.CTk(
+            self.frame,
+            text = 'la matière du proffeseur à deviner est {}'.format(subject),
+            text_color="black"
+        )
+    
 
     def create_color(self, info, answer):
         bg = "#ff6666"  # rouge clair
