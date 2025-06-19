@@ -105,43 +105,60 @@ class CitationPage:
     def show_win_animation(self):
         threading.Thread(target=self.confetti_animation, daemon=True).start()
 
-    def confetti_animation(self):
-    # Charger les images de confettis (remplacez par vos chemins d'accès)
-        confetti_images = [
-            ctk.CTkImage(Image.open("assets/Spakles_Red.png"), size=(40, 40)),
-            ctk.CTkImage(Image.open("assets/Spakles_Blue.png"), size=(50, 50)),
-            ctk.CTkImage(Image.open("assets/Spakles_Yellow.png"), size=(35, 35)),
-            ctk.CTkImage(Image.open("assets/Spakles_Pink.png"), size=(30, 30)),
-            ctk.CTkImage(Image.open("assets/Spakles_Green.png"), size=(50, 50)),
-            ctk.CTkImage(Image.open("assets/Spakles_Orange.png"), size=(45, 45))
+    def show_win_animation(self):
+        self.frame_win = ctk.CTkFrame(self.master, fg_color="white", corner_radius=0)
+        self.frame_win.place(relx=0, rely=0, relwidth=1, relheight=1)
 
-        # Ajoutez autant d'images que nécessaire
-        ]
-    
+        congrats_label = ctk.CTkLabel(
+        self.frame_win,
+        text="🎉 Bravo ! Tu as deviné 🎉",
+        font=ctk.CTkFont(size=32, weight="bold"),
+        text_color="green"
+        )
+        congrats_label.place(relx=0.5, rely=0.4, anchor="center")
+
+        close_button = ctk.CTkButton(
+        self.frame_win,
+        text="Revoir vos guess",
+        font=ctk.CTkFont(size=16),
+        command=self.frame_win.destroy
+        )
+        close_button.place(relx=0.5, rely=0.85, anchor="w")
+        menu_button = ctk.CTkButton(
+            self.frame_win,
+            text="retour au menu",
+            font=ctk.CTkFont(size=16),
+            command=lambda: (self.frame_win.destroy(), self.back_callback())
+        )
+        menu_button.place(relx=0.5, rely=0.85, anchor="e")
+
+    # Lance l’animation dans un thread
+        threading.Thread(target=self.confetti_animation, daemon=True).start()
+
+
+    def confetti_animation(self):
         for _ in range(100):
-        # Choisir une image aléatoire
-            image = random.choice(confetti_images)
-        
-            label = ctk.CTkLabel(
-                self.frame, # Pas de texte
-                text="",
-                image=image,
+            if self.frame_win.winfo_exists():
+                label = ctk.CTkLabel(
+                self.frame_win,
+                text="✨",
+                font=ctk.CTkFont(size=random.randint(1, 50)),
                 bg_color="transparent",
-                fg_color="transparent"
-            )
-            label.place(x=self.get_coord_x(), y=self.get_coord_y())
-            self.frame.after(random.randint(800, 2000), label.destroy)
+                text_color=random.choice(["#ff5e5e", "#f7c948", "#5ec576", "#5ea8ff", "#b15eff"])
+                )
+                label.place(x=self.get_coord_x(), y=self.get_coord_y())
+                self.frame_win.after(random.randint(800, 2000), label.destroy)
 
     def get_coord_x(self):
-        self.x = random.randint(20, 1040)
-        while 320 < self.x < 720:
-            self.x = random.randint(20, 1040)
+        self.x = random.randint(0, 2000)
+        while 320 < self.x < 1080:
+            self.x = random.randint(0, 2000)
         return self.x
 
     def get_coord_y(self):
-        y = random.randint(20, 720)
+        y = random.randint(0,2000)
         if 320 < self.x < 720:
-            while 360 < y < 460:
+            while 360 < y < 720:
                 y = random.randint(20, 720)
         return y
     
