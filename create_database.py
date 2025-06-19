@@ -60,7 +60,7 @@ def initialisation_table(connection,cursor):
     ("Ca va dégénérer","PETITJEAN"),
     ("En un mot, tout est dit","SALOMON"),
     ("SQÉLITE","CHASSEL"),
-    ("Vous êtes vraiments des têtes de pioches en calcul algébrique, on se demande ce qui a été fait dans le secondaire","SALOMON"),
+    ("Vous êtes vraiments des têtes de pioches en calcul algébrique","SALOMON"),
     ("Et du coup vous savez pourquoi ? .... Et bah c'est ca le problème.","RITON"),
     ("Jvois ce que t'as essayé de faire, mais....","RITON"),
     ("Vous n'avez pas le droit d'enregistrer ma voix","MORPHU"),

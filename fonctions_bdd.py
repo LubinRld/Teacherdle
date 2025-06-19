@@ -34,9 +34,8 @@ def nombres_profs():
     
 def choix_prof():
 #fin de la mise en place, on commence le jeu
-    a = random.randint(1,31)    #choix d un id de professeur aléatoire
+    a = random.randint(1,28)    #choix d un id de professeur aléatoire
     objectif = cu.execute("SELECT * from Teachers WHERE id={}".format(a)) 
-    print(cu)
     nom_objectif = objectif.fetchall()   #on récupère le nom du professeur "cible" et on le montre pour l'instant
     PROF_RECHERCHE = nom_objectif[0]
     print(PROF_RECHERCHE[1]) #voici le prof que l on veut (son nom)

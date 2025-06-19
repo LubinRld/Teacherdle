@@ -1,8 +1,9 @@
 import customtkinter as ctk
 from tkinter import * 
 import fonctions_bdd as bd
-from create_widget import ClassicPage, WelcomePage, CitationPage
-from PIL import Image
+from citation_page import *
+from classic_page import *
+from welcome_page import *
 
 class TeacherdleApp:
     def __init__(self):
