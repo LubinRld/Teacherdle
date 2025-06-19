@@ -27,6 +27,36 @@ class CitationPage:
         self.create_search_bar()
         self.create_table()
 
+        self.hint_wait_label = ctk.CTkLabel(
+            self.frame,
+            text="Un indice sera disponible dans 3 essais",
+            text_color="black",
+            font=ctk.CTkFont(size=16),
+            bg_color="#3B8ED0"
+        )
+        self.hint_wait_label.pack()
+
+        self.hint_button = ctk.CTkButton(
+            self.frame,
+            text="Cliquez pour voir l'indice",
+            font=ctk.CTkFont(size=16),
+            command=self.reveal_hint,
+            fg_color="#FFA500"
+        )
+
+        self.hint_button.pack(pady=5)
+        self.hint_button.pack_forget()  # Cacher au début
+
+        self.hint_label = ctk.CTkLabel(
+            self.frame,
+            text="",  # Vide au début
+            text_color="black",
+            font=ctk.CTkFont(size=18),
+            bg_color="#3B8ED0"
+        )
+        self.hint_label.pack()
+        self.hint_label.pack_forget()  # Cacher au début
+
     def destroy(self):
         self.frame.destroy()
         self.label.destroy()
@@ -69,22 +99,21 @@ class CitationPage:
         
         self.compteur_essais += 1
         self.current_row += 1
-        if self.compteur_essais == 3:
-            self.show_hint()
+        essais_restants = 3 - self.compteur_essais
+        if essais_restants > 0:
+            self.hint_wait_label.configure(text=f"Un indice sera disponible dans {essais_restants} essai(s)")
+        elif self.compteur_essais == 3:
+            self.hint_wait_label.pack_forget()
+            self.hint_button.pack()
         elif self.compteur_essais >= 6:
             self.show_defeat_animation()
             return
     
-    def show_hint(self):
+    def reveal_hint(self):
         subject = bd.get_subject_prof(self.citation)
-        hintLabel = ctk.CTkLabel(
-            self.frame,
-            text = 'la matière du professeur à deviner est {}'.format(subject),
-            text_color="black",
-            font=ctk.CTkFont(size=18),
-            bg_color="#3B8ED0"
-        )
-        hintLabel.pack(pady=10)
+        self.hint_label.configure(text=f"La matière du professeur à deviner est {subject}")
+        self.hint_label.pack()
+        self.hint_button.pack_forget()
     
 
     def create_color(self, info, answer):
