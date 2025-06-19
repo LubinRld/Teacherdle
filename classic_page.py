@@ -140,15 +140,15 @@ class ClassicPage:
                 self.frame_win.after(random.randint(800, 2000), label.destroy)
 
     def get_coord_x(self):
-        self.x = random.randint(20, 1040)
-        while 320 < self.x < 720:
-            self.x = random.randint(20, 1040)
+        self.x = random.randint(0, 2000)
+        while 320 < self.x < 1080:
+            self.x = random.randint(0, 2000)
         return self.x
 
     def get_coord_y(self):
-        y = random.randint(20, 720)
+        y = random.randint(0,2000)
         if 320 < self.x < 720:
-            while 360 < y < 460:
+            while 360 < y < 720:
                 y = random.randint(20, 720)
         return y
     
