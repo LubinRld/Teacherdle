@@ -48,7 +48,7 @@ def choice_teachers():
     
     return target2
 
-def choix_citations():
+def choice_citations():
     a = random.randint(1,15)
     citation = cu.execute("SELECT * from Citations WHERE id_cit=?",(a,))
     citation_filtrees = citation.fetchall()
