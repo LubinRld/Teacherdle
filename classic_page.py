@@ -12,6 +12,7 @@ class ClassicPage:
         self.try_counter = 0
         self.current_row = 1
         self.search_var = ctk.StringVar()
+        self.is_animation = False
         self.back_callback = back_callback
         self.restart_callback = restart_callback
 
@@ -108,35 +109,37 @@ class ClassicPage:
         )
         congrats_label.place(relx=0.5, rely=0.4, anchor="center")
 
-        buttons_frame = ctk.CTkFrame(self.frame_win, fg_color="transparent")
-        buttons_frame.place(relx=0.5, rely=0.85, anchor="center")
+        self.buttons_frame = ctk.CTkFrame(self.frame_win, fg_color="transparent")
+        self.buttons_frame.place(relx=0.5, rely=0.85, anchor="center")
+        self.buttons_frame.place_forget()
 
         menu_button = ctk.CTkButton(
-        buttons_frame,
+        self.buttons_frame,
         text="Retour au menu",
         font=ctk.CTkFont(size=14),
-        command=lambda: (self.frame_win.destroy(), self.back_callback())
+        command=lambda: not self.is_animation and (self.frame_win.destroy(), self.back_callback())
         )
         menu_button.pack(side="left", padx=20)
 
         restart_button = ctk.CTkButton(
-        buttons_frame,
+        self.buttons_frame,
         text="Relancer",
         font=ctk.CTkFont(size=14),
-        command=lambda: (self.frame_win.destroy(), self.restart_callback())
+        command=lambda: not self.is_animation and (self.frame_win.destroy(), self.restart_callback())
         )
         restart_button.pack(side="left", padx=20)
 
         close_button = ctk.CTkButton(
-        buttons_frame,
+        self.buttons_frame,
         text="Revoir vos guess",
         font=ctk.CTkFont(size=14),
-        command=self.frame_win.destroy
+        command=lambda: not self.is_animation and self.frame_win.destroy()
         )
         close_button.pack(side="left", padx=20)
 
         
     # Lance l’animation dans un thread
+        self.is_animation = True
         threading.Thread(target=self.confetti_animation, daemon=True).start()
 
 
@@ -152,18 +155,16 @@ class ClassicPage:
                 )
                 label.place(x=self.get_coord_x(), y=self.get_coord_y())
                 self.frame_win.after(random.randint(800, 2000), label.destroy)
+                self.frame_win.after(3000, lambda: (setattr(self, "is_animation", False), self.buttons_frame.place(relx=0.5, rely=0.85, anchor="center")))
 
     def get_coord_x(self):
         self.x = random.randint(0, 2000)
-        while 320 < self.x < 720:
-            self.x = random.randint(0, 2000)
         return self.x
 
     def get_coord_y(self):
         y = random.randint(0,2000)
-        if 320 < self.x < 720:
-            while 360 < y < 720:
-                y = random.randint(20, 720)
+        while 230 < y < 330:
+            y = random.randint(0, 2000)
         return y
     
     def show_defeat_animation(self):
