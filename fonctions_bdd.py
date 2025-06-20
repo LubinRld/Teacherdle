@@ -10,45 +10,45 @@ co = sqlite3.connect("TeacherdleDB.db") #recuperation du connecteur
 cu = co.cursor() #recuperation du curseur
 
 create_database.initialisation_table(co,cu)# on initialise la table avec ces deux éléments
-def get_infos_prof(nom):
-    infos_finales = []
-    infos = cu.execute("SELECT * FROM Teachers WHERE nom=?", (nom,))
-    infos_filtrées = infos.fetchall()
-    for i in infos_filtrées:
-        infos_finales.append(list(i[1:]))
-    return infos_finales
+def get_infos_prof(name):
+    finals_info = []
+    infos = cu.execute("SELECT * FROM Teachers WHERE name=?", (name,))
+    filtered_info = infos.fetchall()
+    for i in filtered_info:
+        finals_info.append(list(i[1:]))
+    return finals_info
 
-def envoie_noms():
+def send_names():
     teacher_list = []
-    noms = cu.execute("""SELECT nom FROM Teachers""")
-    noms_filtrés= noms.fetchall()
-    for i in range(len(noms_filtrés)):
-        teacher_list.append(noms_filtrés[i][0])
+    names = cu.execute("""SELECT name FROM Teachers""")
+    names_filtrés= names.fetchall()
+    for i in range(len(names_filtrés)):
+        teacher_list.append(names_filtrés[i][0])
     return teacher_list
 
-def nombres_profs():
-    nombre = cu.execute("SELECT id FROM Teachers")
-    nombre_filtrés = nombre.fetchall()
-    return len(nombre_filtrés)
+def numbers_profs():
+    numbers = cu.execute("SELECT id FROM Teachers")
+    numbers_filtrés = numbers.fetchall()
+    return len(numbers_filtrés)
     
 def get_subject_prof(citation):
-    res = cu.execute("SELECT Subject FROM Teachers WHERE nom=?",(citation[0][2],))
+    res = cu.execute("SELECT Subject FROM Teachers WHERE name=?",(citation[0][2],))
     subject = res.fetchall()
 
     return (subject[0][0])
     
-def choix_prof():
+def choice_teachers():
 #fin de la mise en place, on commence le jeu
     a = random.randint(1,28)    #choix d un id de professeur aléatoire
-    objectif = cu.execute("SELECT * from Teachers WHERE id={}".format(a)) 
-    nom_objectif = objectif.fetchall()   #on récupère le nom du professeur "cible" et on le montre pour l'instant
-    PROF_RECHERCHE = nom_objectif[0]
-    print(PROF_RECHERCHE[1]) #voici le prof que l on veut (son nom)
-    cible = get_infos_prof(PROF_RECHERCHE[1])[0]
+    target = cu.execute("SELECT * from Teachers WHERE id={}".format(a)) 
+    name_target = target.fetchall()   #on récupère le nom du professeur "cible" et on le montre pour l'instant
+    target_teacher = name_target[0]
+    print(target_teacher[1]) #voici le prof que l on veut (son nom)
+    target2 = get_infos_prof(target_teacher[1])[0]
     
-    return cible
+    return target2
 
-def choix_citations():
+def choice_citations():
     a = random.randint(1,15)
     citation = cu.execute("SELECT * from Citations WHERE id_cit=?",(a,))
     citation_filtrees = citation.fetchall()

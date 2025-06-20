@@ -5,13 +5,14 @@ import threading
 import random
 
 class ClassicPage:
-    def __init__(self, master, noms, prof_cible, back_callback, restart_callback):
+    def __init__(self, master, names, target_teacher, back_callback, restart_callback):
         self.master = master 
-        self.noms = noms
-        self.prof_cible = prof_cible
-        self.compteur_essais = 0
+        self.names = names
+        self.target_teacher = target_teacher
+        self.try_counter = 0
         self.current_row = 1
         self.search_var = ctk.StringVar()
+        self.is_animation = False
         self.back_callback = back_callback
         self.restart_callback = restart_callback
 
@@ -48,15 +49,15 @@ class ClassicPage:
     
     def create_answer(self, data):
         
-        reussi = 0
+        correct = 0
         for col, info in enumerate(data[0]):
-            answer = self.prof_cible[col]
+            answer = self.target_teacher[col]
             if answer == info:
-                reussi += 1
+                correct += 1
 
             label = ctk.CTkLabel(
                 self.table_frame,
-                text=info + self.create_fleche(info, answer),
+                text=info + self.create_arrow(info, answer),
                 fg_color=self.create_color(info, answer),
                 text_color="black",
                 font=ctk.CTkFont(size=14),
@@ -66,16 +67,16 @@ class ClassicPage:
             )
             label.grid(row=self.current_row, column=col, sticky="nsew", padx=1, pady=5)
 
-        if reussi == 6:
+        if correct == 6:
             self.show_win_animation()
-        elif self.compteur_essais >= 6:
+        elif self.try_counter >= 6:
             self.show_defeat_animation()
             return
         else:
-            self.compteur_essais += 1
+            self.try_counter += 1
             self.current_row += 1
 
-    def create_fleche(self, info, answer):
+    def create_arrow(self, info, answer):
         num = sum(1 for i in info if i.isdigit())
         arrow = ""
         if num == 4:
@@ -108,34 +109,36 @@ class ClassicPage:
         )
         congrats_label.place(relx=0.5, rely=0.4, anchor="center")
 
-        buttons_frame = ctk.CTkFrame(self.frame_win, fg_color="transparent")
-        buttons_frame.place(relx=0.5, rely=0.85, anchor="center")
+        self.buttons_frame = ctk.CTkFrame(self.frame_win, fg_color="transparent")
+        self.buttons_frame.place(relx=0.5, rely=0.85, anchor="center")
+        self.buttons_frame.place_forget()
 
         menu_button = ctk.CTkButton(
-        buttons_frame,
+        self.buttons_frame,
         text="Retour au menu",
         font=ctk.CTkFont(size=14),
-        command=lambda: (self.frame_win.destroy(), self.back_callback())
+        command=lambda: not self.is_animation and (self.frame_win.destroy(), self.back_callback())
         )
         menu_button.pack(side="left", padx=20)
 
         restart_button = ctk.CTkButton(
-        buttons_frame,
+        self.buttons_frame,
         text="Relancer",
         font=ctk.CTkFont(size=14),
-        command=lambda: (self.frame_win.destroy(), self.restart_callback())
+        command=lambda: not self.is_animation and (self.frame_win.destroy(), self.restart_callback())
         )
         restart_button.pack(side="left", padx=20)
 
         close_button = ctk.CTkButton(
-        buttons_frame,
+        self.buttons_frame,
         text="Revoir vos guess",
         font=ctk.CTkFont(size=14),
-        command=self.frame_win.destroy
+        command=lambda: not self.is_animation and self.frame_win.destroy()
         )
         close_button.pack(side="left", padx=20)
 
         # Lance l’animation dans un thread
+        self.is_animation = True
         threading.Thread(target=self.confetti_animation, daemon=True).start()
 
 
@@ -151,18 +154,16 @@ class ClassicPage:
                 )
                 label.place(x=self.get_coord_x(), y=self.get_coord_y())
                 self.frame_win.after(random.randint(800, 2000), label.destroy)
+                self.frame_win.after(3000, lambda: (setattr(self, "is_animation", False), self.buttons_frame.place(relx=0.5, rely=0.85, anchor="center")))
 
     def get_coord_x(self):
         self.x = random.randint(0, 2000)
-        while 320 < self.x < 720:
-            self.x = random.randint(0, 2000)
         return self.x
 
     def get_coord_y(self):
         y = random.randint(0,2000)
-        if 320 < self.x < 720:
-            while 360 < y < 720:
-                y = random.randint(20, 720)
+        while 230 < y < 330:
+            y = random.randint(0, 2000)
         return y
     
     def show_defeat_animation(self):
@@ -179,7 +180,7 @@ class ClassicPage:
 
         reveal_label = ctk.CTkLabel(
             frame_defeat,
-            text=f"La bonne réponse était :\n{self.prof_cible}",
+            text=f"La bonne réponse était :\n{self.target_teacher}",
             font=ctk.CTkFont(size=20),
             text_color="white",
             justify="center"
@@ -256,7 +257,7 @@ class ClassicPage:
         if not search_term:
             return
         # Sinon, on filtre les noms correspondant à la saisie
-        suggestions = [nom for nom in self.noms if nom.lower().startswith(search_term)]
+        suggestions = [name for name in self.names if name.lower().startswith(search_term)]
         # Et on les ajoute à la liste
         for s in suggestions:
             self.suggestions_list.insert(ctk.END, s)
@@ -267,10 +268,10 @@ class ClassicPage:
             self.search_var.set(selected)   # Remplace le contenu de la barre de recherche par la suggestion choisie
 
     def enter_pressed(self):
-        nom = self.search_var.get()         # Récupère le nom actuellement saisi dans la barre de recherche
-        if nom in self.noms:                # Vérifie si ce nom est dans la liste des noms de prof
-            data = bd.get_infos_prof(nom)   # Récupère les informations associées au prof via la base de données
+        name = self.search_var.get()         # Récupère le nom actuellement saisi dans la barre de recherche
+        if name in self.names:                # Vérifie si ce nom est dans la liste des noms de prof
+            data = bd.get_infos_prof(name)   # Récupère les informations associées au prof via la base de données
             self.create_answer(data)        # Affiche ces informations dans l’interface
-            self.noms.remove(nom)           # Retire ce nom de la liste pour éviter qu’il ne soit deviné à nouveau
+            self.names.remove(name)           # Retire ce nom de la liste pour éviter qu’il ne soit deviné à nouveau
             self.search_var.set("")         # Réinitialise le champ de saisi
             self.update_suggestions()       # Met a jour les suggestions

@@ -34,23 +34,23 @@ class TeacherdleApp:
     
     def show_classic_page(self):
         self.clear_current_page()
-        self.noms= bd.envoie_noms()
-        self.prof_cible=bd.choix_prof()
+        self.names= bd.send_names()
+        self.target_teacher=bd.choice_teachers()
         self.current_page = ClassicPage(
             master=self.window,
-            noms=self.noms,
-            prof_cible=self.prof_cible,
+            names=self.names,
+            target_teacher=self.target_teacher,
             back_callback=self.show_welcome_page,
             restart_callback=self.show_classic_page
         )
 
     def show_citation_page(self):
         self.clear_current_page()
-        self.noms= bd.envoie_noms()
-        self.citation=bd.choix_citations()
+        self.name= bd.send_names()
+        self.citation=bd.choice_citations()
         self.current_page = CitationPage(
             master=self.window,
-            noms=self.noms,
+            name=self.name,
             citation=self.citation,
             back_callback=self.show_welcome_page,
             restart_callback=self.show_citation_page

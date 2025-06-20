@@ -5,7 +5,7 @@ def initialisation_table(connection,cursor):
     
     cursor.execute("""CREATE TABLE Teachers (
         id integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-        nom TEXT NOT NULL , 
+        name TEXT NOT NULL , 
         Genre TEXT NOT NULL,
         Thesis TEXT NOT NULL,
         Type TEXT NOT NULL,
@@ -19,9 +19,9 @@ def initialisation_table(connection,cursor):
     cursor.execute("""CREATE TABLE Citations (
         id_cit INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         Text TEXT NOT NULL,
-        Teacher TEXT NOT NULL CONSTRAINT FK_teachers_citations REFERENCES Teachers(nom))
+        Teacher TEXT NOT NULL CONSTRAINT FK_teachers_citations REFERENCES Teachers(name))
         """)
-    cursor.execute("""INSERT INTO Teachers (nom, Genre, Thesis, Type, Subject, Fonction) VALUES
+    cursor.execute("""INSERT INTO Teachers (name, Genre, Thesis, Type, Subject, Fonction) VALUES
 ('BRACHAIS', 'M', '1996', 'CM ET TD', 'CHIMIE', 'DIRECTEUR GEIPI ET RESPO GEIPI 1'),
 ('BIDAULT', 'M', '1995', 'CM ET TD', 'PHYSIQUE', 'RESPO LV2'),
 ('RITON', 'M', '2011', 'CM ET TD', 'MATHEMATIQUES', 'Aucune'),
