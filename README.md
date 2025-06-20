@@ -22,6 +22,11 @@ Voici le fonctionnement de l'algorithme de jeu :
 
 
 
+Nous avons aussi le jeu des citations, ou l'on doit deviner quel professeur a dit une citation, l'algorithme de jeu est globalement le même, on a juste un oindice aux bout de trois essais.
+
+
+
+
 
 
 
@@ -46,6 +51,8 @@ UML diagramm of our database
 
 Here is the working of the algorithm :
 ![image](https://github.com/user-attachments/assets/e392895d-105a-4cc7-89f5-a59f4730201e)
+
+We also got the Game of the Citations, where you must guess who says something, it works the same, with, in addition, you get a hint after 3 unsuccessfull tries
 
 
 
