@@ -1,16 +1,16 @@
 import customtkinter as ctk
 from tkinter import *
 from PIL import Image
-import fonctions_bdd as bd
+import fonctions_bdd as db
 import threading
 import random
 
 class CitationPage:
-    def __init__(self, master, noms, citation, back_callback, restart_callback):
+    def __init__(self, master, name, citation, back_callback, restart_callback):
         self.master = master
-        self.noms = noms
+        self.name = name
         self.citation = citation
-        self.compteur_essais = 0
+        self.try_counter = 0
         self.current_row = 1
         self.search_var = ctk.StringVar()
         self.frame = ctk.CTkFrame(master, fg_color="#3B8ED0", corner_radius=0)
@@ -79,7 +79,7 @@ class CitationPage:
     def create_answer(self, data):
         
         print(self.citation)
-        info = data[0][0]
+        target = data[0][0]
         answer = self.citation[0][2] 
         print(answer)
         print(data)
@@ -88,8 +88,8 @@ class CitationPage:
 
         label = ctk.CTkLabel(
             self.table_frame,
-            text=info,
-            fg_color=self.create_color(info, answer),
+            text=target,
+            fg_color=self.create_color(target, answer),
             text_color="black",
             font=ctk.CTkFont(size=14),
             width=120,
@@ -98,20 +98,20 @@ class CitationPage:
         )
         label.grid(row=self.current_row, column=0, sticky="nsew", padx=1, pady=5)
         
-        self.compteur_essais += 1
+        self.try_counter += 1
         self.current_row += 1
-        essais_restants = 3 - self.compteur_essais
-        if essais_restants > 0:
-            self.hint_wait_label.configure(text=f"Un indice sera disponible dans {essais_restants} essai(s)")
-        elif self.compteur_essais == 3:
+        try_left = 3 - self.try_counter
+        if try_left > 0:
+            self.hint_wait_label.configure(text=f"Un indice sera disponible dans {try_left} essai(s)")
+        elif self.try_counter == 3:
             self.hint_wait_label.pack_forget()
             self.hint_button.pack()
-        elif self.compteur_essais >= 6:
+        elif self.try_counter >= 6:
             self.show_defeat_animation()
             return
     
     def reveal_hint(self):
-        subject = bd.get_subject_prof(self.citation)
+        subject = db.get_subject_prof(self.citation)
         self.hint_label.configure(text=f"La matière du professeur à deviner est {subject}")
         self.hint_label.pack()
         self.hint_button.pack_forget()
@@ -119,10 +119,10 @@ class CitationPage:
 
     def create_color(self, info, answer):
         bg = "#ff6666"  # rouge clair
-        infos_split = info.split()
+        target_split = info.split()
         answer_split = answer.split()
         split = 0
-        for k in infos_split:
+        for k in target_split:
             for l in answer_split:
                 if k == l:
                     split += 1
@@ -279,7 +279,7 @@ class CitationPage:
         else:
             self.suggestions_list.pack()
             self.suggestions_list.delete(0, ctk.END)
-            suggestions = [nom for nom in self.noms if nom.lower().startswith(search_term)]
+            suggestions = [nom for nom in self.name if nom.lower().startswith(search_term)]
             for s in suggestions:
                 self.suggestions_list.insert(ctk.END, s)
 
@@ -289,12 +289,12 @@ class CitationPage:
             self.search_var.set(selected)
 
     def enter_pressed(self):
-        nom = self.search_var.get()
-        if nom in self.noms:
-            data = bd.get_infos_prof(nom)
+        name = self.search_var.get()
+        if name in self.name:
+            data = db.get_infos_prof(name)
             self.create_answer(data)
-            self.noms.remove(nom)
+            self.name.remove(name)
             # logique de victoire/défaite + ajout des infos au tableau
-            print(f"Tentative {self.compteur_essais} : {nom}")
+            print(f"Tentative {self.try_counter} : {name}")
             self.search_var.set("")
             self.update_suggestions()

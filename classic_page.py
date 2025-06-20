@@ -5,11 +5,11 @@ import threading
 import random
 
 class ClassicPage:
-    def __init__(self, master, noms, prof_cible, back_callback, restart_callback):
+    def __init__(self, master, names, target_teacher, back_callback, restart_callback):
         self.master = master 
-        self.noms = noms
-        self.prof_cible = prof_cible
-        self.compteur_essais = 0
+        self.name = names
+        self.target_teacher = target_teacher
+        self.try_counter = 0
         self.current_row = 1
         self.search_var = ctk.StringVar()
         self.back_callback = back_callback
@@ -48,15 +48,15 @@ class ClassicPage:
     
     def create_answer(self, data):
         
-        reussi = 0
+        correct = 0
         for col, info in enumerate(data[0]):
             answer = self.prof_cible[col]
             if answer == info:
-                reussi += 1
+                correct += 1
 
             label = ctk.CTkLabel(
                 self.table_frame,
-                text=info + self.create_fleche(info, answer),
+                text=info + self.create_arrow(info, answer),
                 fg_color=self.create_color(info, answer),
                 text_color="black",
                 font=ctk.CTkFont(size=14),
@@ -66,16 +66,16 @@ class ClassicPage:
             )
             label.grid(row=self.current_row, column=col, sticky="nsew", padx=1, pady=5)
 
-        if reussi == 6:
+        if correct == 6:
             self.show_win_animation()
-        elif self.compteur_essais >= 6:
+        elif self.try_count >= 6:
             self.show_defeat_animation()
             return
         else:
-            self.compteur_essais += 1
+            self.try_count += 1
             self.current_row += 1
 
-    def create_fleche(self, info, answer):
+    def create_arrow(self, info, answer):
         num = sum(1 for i in info if i.isdigit())
         arrow = ""
         if num == 4:
@@ -244,7 +244,7 @@ class ClassicPage:
         else:
             self.suggestions_list.pack()
             self.suggestions_list.delete(0, ctk.END)
-            suggestions = [nom for nom in self.noms if nom.lower().startswith(search_term)]
+            suggestions = [name for name in self.name if name.lower().startswith(search_term)]
             for s in suggestions:
                 self.suggestions_list.insert(ctk.END, s)
 
@@ -254,12 +254,12 @@ class ClassicPage:
             self.search_var.set(selected)
 
     def enter_pressed(self):
-        nom = self.search_var.get()
-        if nom in self.noms:
-            data = bd.get_infos_prof(nom)
+        name = self.search_var.get()
+        if name in self.name:
+            data = bd.get_infos_prof(name)
             self.create_answer(data)
-            self.noms.remove(nom)
+            self.name.remove(name)
             # logique de victoire/défaite + ajout des infos au tableau
-            print(f"Tentative {self.compteur_essais} : {nom}")
+            print(f"Tentative {self.try_count} : {name}")
             self.search_var.set("")
             self.update_suggestions()
