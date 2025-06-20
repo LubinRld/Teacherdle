@@ -79,11 +79,8 @@ class CitationPage:
     
     def create_answer(self, data):
         
-        print(self.citation)
         target = data[0][0]
         answer = self.citation[0][2] 
-        print(answer)
-        print(data)
         if answer == data[0][0]:
             self.show_win_animation()
 
@@ -296,6 +293,5 @@ class CitationPage:
             self.create_answer(data)
             self.name.remove(name)
             # logique de victoire/défaite + ajout des infos au tableau
-            print(f"Tentative {self.try_counter} : {name}")
             self.search_var.set("")
             self.update_suggestions()

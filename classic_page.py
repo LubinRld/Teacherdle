@@ -7,7 +7,7 @@ import random
 class ClassicPage:
     def __init__(self, master, names, target_teacher, back_callback, restart_callback):
         self.master = master 
-        self.name = names
+        self.names = names
         self.target_teacher = target_teacher
         self.try_counter = 0
         self.current_row = 1
@@ -245,7 +245,7 @@ class ClassicPage:
         else:
             self.suggestions_list.pack()
             self.suggestions_list.delete(0, ctk.END)
-            suggestions = [name for name in self.name if name.lower().startswith(search_term)]
+            suggestions = [name for name in self.names if name.lower().startswith(search_term)]
             for s in suggestions:
                 self.suggestions_list.insert(ctk.END, s)
 
@@ -256,10 +256,10 @@ class ClassicPage:
 
     def enter_pressed(self):
         name = self.search_var.get()
-        if name in self.name:
+        if name in self.names:
             data = bd.get_infos_prof(name)
             self.create_answer(data)
-            self.name.remove(name)
+            self.names.remove(name)
             # logique de victoire/défaite + ajout des infos au tableau
             print(f"Tentative {self.try_counter} : {name}")
             self.search_var.set("")
