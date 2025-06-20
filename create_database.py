@@ -19,7 +19,7 @@ def initialisation_table(connection,cursor):
     cursor.execute("""CREATE TABLE Citations (
         id_cit INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         Text TEXT NOT NULL,
-        Teacher TEXT NOT NULL CONSTRAINT FK_teachers_citations REFERENCES Teachers(id))
+        Teacher TEXT NOT NULL CONSTRAINT FK_teachers_citations REFERENCES Teachers(nom))
         """)
     cursor.execute("""INSERT INTO Teachers (nom, Genre, Thesis, Type, Subject, Fonction) VALUES
 ('BRACHAIS', 'M', '1996', 'CM ET TD', 'CHIMIE', 'DIRECTEUR GEIPI ET RESPO GEIPI 1'),
@@ -48,8 +48,31 @@ def initialisation_table(connection,cursor):
 ('GINHAC', 'M', '1999', 'CM ET TD ET TP', 'INFORMATIQUE', 'Aucune'),
 ('CHASSEL', 'M', 'NON', 'CM ET TD ET TP', 'INFORMATIQUE', 'Aucune'),
 ('COILLET', 'M', '2011', 'CM ET TD ET TP', 'PHYSIQUE', 'Aucune'),
-('MORPHU', 'M', '2002', 'CM ET TD', 'ELECTRONIQUE ET INFORMATIQUE', 'Aucune');
+('MORPHU', 'M', '2002', 'CM ET TD', 'ELECTRONIQUE ET INFORMATIQUE', 'Aucune'),
+('MARQUIE','M','1994','TP','ELECTRONIQUE','Aucune');
     """)
     connection.commit()
-
-#données à rentrer bien évidemment
+    cursor.execute("""INSERT INTO Citations (Text, Teacher) VALUES
+    ("C'est pourtant Trivial!","BIDAULT"),
+    ("Donc, on intuite un condensateur plan infini","RITON"),
+    ("On est pas dans une société de SERVICE !","PETITJEAN"),
+    ("Vous travaillez, JE dirige","PETITJEAN"),
+    ("Ca va dégénérer","PETITJEAN"),
+    ("En un mot, tout est dit","SALOMON"),
+    ("SQÉLITE","CHASSEL"),
+    ("Vous êtes vraiments des têtes de pioches en calcul algébrique","SALOMON"),
+    ("Et du coup vous savez pourquoi ? .... Et bah c'est ca le problème.","RITON"),
+    ("Jvois ce que t'as essayé de faire, mais....","RITON"),
+    ("Vous n'avez pas le droit d'enregistrer ma voix","MORPHU"),
+    ("Posez moi vos questions, jsuis payé une fortune pour y répondre","CHAMBRION"),
+    ("Y a aucun collègue qui me fait marrrer, je les déteste tous","MEUNIER"),
+    ("Le polynôme il est SAINGDÉ","VAGO"),
+    ("On est tous déja passé sous des lignes Hautes Tensions en entendant ce bruit CARACTÉRISTIQUE","WEEBER"),
+    ("LE BRAINNNNSSTTTOOOORMIIIIIIIIIINNNNNNGGG","VAGO"),
+    ("Nan mais votre schéma il est merdique là", "SALOMON"),
+    ("Je préfère voir les lapins plutôt que vous", "PETITJEAN"),
+    ("Ça fait partit de ces séances clefs", "WEEBER"),
+    ("Et toi t'es le support émotionnel?","CHASSEL")
+    ;
+    """)
+    connection.commit()
