@@ -261,6 +261,5 @@ class ClassicPage:
             self.create_answer(data)
             self.names.remove(name)
             # logique de victoire/défaite + ajout des infos au tableau
-            print(f"Tentative {self.try_counter} : {name}")
             self.search_var.set("")
             self.update_suggestions()
