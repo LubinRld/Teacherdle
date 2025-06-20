@@ -50,7 +50,7 @@ class ClassicPage:
         
         correct = 0
         for col, info in enumerate(data[0]):
-            answer = self.prof_cible[col]
+            answer = self.target_teacher[col]
             if answer == info:
                 correct += 1
 
@@ -68,11 +68,11 @@ class ClassicPage:
 
         if correct == 6:
             self.show_win_animation()
-        elif self.try_count >= 6:
+        elif self.try_counter >= 6:
             self.show_defeat_animation()
             return
         else:
-            self.try_count += 1
+            self.try_counter += 1
             self.current_row += 1
 
     def create_arrow(self, info, answer):
@@ -180,7 +180,7 @@ class ClassicPage:
 
         reveal_label = ctk.CTkLabel(
             frame_defeat,
-            text=f"La bonne réponse était :\n{self.prof_cible}",
+            text=f"La bonne réponse était :\n{self.target_teacher}",
             font=ctk.CTkFont(size=20),
             text_color="white",
             justify="center"
@@ -260,6 +260,6 @@ class ClassicPage:
             self.create_answer(data)
             self.name.remove(name)
             # logique de victoire/défaite + ajout des infos au tableau
-            print(f"Tentative {self.try_count} : {name}")
+            print(f"Tentative {self.try_counter} : {name}")
             self.search_var.set("")
             self.update_suggestions()

@@ -34,12 +34,12 @@ class TeacherdleApp:
     
     def show_classic_page(self):
         self.clear_current_page()
-        self.name= bd.send_names()
-        self.prof_cible=bd.choice_teachers()
+        self.names= bd.send_names()
+        self.target_teacher=bd.choice_teachers()
         self.current_page = ClassicPage(
             master=self.window,
-            name=self.name,
-            prof_cible=self.prof_cible,
+            names=self.names,
+            target_teacher=self.target_teacher,
             back_callback=self.show_welcome_page,
             restart_callback=self.show_classic_page
         )
