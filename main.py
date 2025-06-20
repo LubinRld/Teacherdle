@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from tkinter import * 
-import fonctions_bdd as bd
-from citation_page import *
+import fonctions_db as db
+from quote_page import *
 from classic_page import *
 from welcome_page import *
 from PIL import Image
@@ -34,8 +34,8 @@ class TeacherdleApp:
     
     def show_classic_page(self):
         self.clear_current_page()
-        self.names= bd.send_names()
-        self.target_teacher=bd.choice_teachers()
+        self.names= db.send_names()
+        self.target_teacher=db.choice_teachers()
         self.current_page = ClassicPage(
             master=self.window,
             names=self.names,
@@ -46,8 +46,8 @@ class TeacherdleApp:
 
     def show_citation_page(self):
         self.clear_current_page()
-        self.name= bd.send_names()
-        self.citation=bd.choice_citations()
+        self.name= db.send_names()
+        self.citation=db.choice_citations()
         self.current_page = CitationPage(
             master=self.window,
             name=self.name,

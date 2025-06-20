@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from tkinter import *
 from PIL import Image
-import fonctions_bdd as db
+import fonctions_db as db
 import threading
 import random
 

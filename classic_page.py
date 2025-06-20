@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import *
-import fonctions_bdd as bd
+import fonctions_db as db
 import threading
 import random
 
@@ -257,7 +257,7 @@ class ClassicPage:
     def enter_pressed(self):
         name = self.search_var.get()
         if name in self.names:
-            data = bd.get_infos_prof(name)
+            data = db.get_infos_prof(name)
             self.create_answer(data)
             self.names.remove(name)
             # logique de victoire/défaite + ajout des infos au tableau
