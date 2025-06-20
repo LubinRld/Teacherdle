@@ -4,11 +4,16 @@ For English informations, you can go [here](#English-Version) :
 Teacherdle est un jeu de type Wordle, c'est à dire que l'on doit deviner un professeur de l'école parmi une liste des autres.
 Nous utilisons une base de données pour stocker les informations sur les professeurs (données publiques, rien de personnel)
 
+Pour faire fonctionner le jeu, il suffit de cloner le répertoire git, et d'effectuer la commande :
+```
+
+pip install pillow
+
+```
 Voici notre diagramme UML de la Base de donnée :
 ![image](https://github.com/user-attachments/assets/8e3337ae-208d-4614-b51c-7964583a9607)
 
 Dans cette base de donnée, nous avons les informations sur les professeurs, ainsi que les citations qui leurs sont associées.
-
 
 
 Voici le fonctionnement de l'algorithme de jeu :
@@ -27,6 +32,13 @@ Voici le fonctionnement de l'algorithme de jeu :
 
 Teacherdle is a Wordle-like game, which means that you hav to guess a Teachers from the engineering school among a lis of most of them.
 Here, we're using a database to stock and use the data about each teachers (only public data, nothing personal or private)
+
+Before starting, you need to install pillow : 
+```
+
+pip install pillow
+
+```
 
 UML diagramm of our database
 
