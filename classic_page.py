@@ -23,7 +23,7 @@ class ClassicPage:
         self.frame.pack(fill="both", expand=True)
 
         self.menu_button = ctk.CTkButton(self.frame, text="Menu Principal", font=ctk.CTkFont(size=20), fg_color="#6062f9", command=back_callback)
-        self.menu_button.pack(anchor='nw', padx=100, pady=10)
+        self.menu_button.pack(anchor="nw", padx=100, pady=10)
 
         self.create_search_bar()
         self.create_table()
@@ -33,7 +33,7 @@ class ClassicPage:
         self.label2.destroy()
         self.frame.destroy()
 
-    def create_table(self):
+    def create_table(self): # Méthode permétant d'afficher le tableau des reponse
         categories = ["Professeur", "Genre", "Date de thèse", "type", "Matière", "Fonction particulière"]
         self.table_frame = ctk.CTkFrame(self.frame, fg_color="white", corner_radius=8)
         self.table_frame.pack(fill="both", padx=20, pady=20)
@@ -135,8 +135,7 @@ class ClassicPage:
         )
         close_button.pack(side="left", padx=20)
 
-        
-    # Lance l’animation dans un thread
+        # Lance l’animation dans un thread
         threading.Thread(target=self.confetti_animation, daemon=True).start()
 
 
@@ -216,50 +215,62 @@ class ClassicPage:
         close_button.pack(side="left", padx=20)
 
 
-    def create_search_bar(self):
-        self.search_var.trace_add("write", lambda *args: self.update_suggestions())
-
+    def create_search_bar(self):        # Méthode pour la barre de recherche
+        # Ajoute un traceur sur la variable de recherche : chaque fois que l'utilisateur écrit,
+        # la méthode update_suggestions() est appelée pour mettre à jour les propositions.
+        self.search_var.trace_add("write", lambda *args: self.update_suggestions()) 
+        
+        # Crée un cadre principal à l'intérieur du cadre parent (self.frame).
         main_frame = ctk.CTkFrame(self.frame, fg_color=None)
         main_frame.pack(padx=40, pady=40)
 
+        # Crée un sous-cadre pour contenir la barre de recherche et le bouton.
         search_frame = ctk.CTkFrame(main_frame, fg_color=None)
         search_frame.pack(fill="x", pady=(0, 15))
 
+        # Crée le champ de saisie
         entry = ctk.CTkEntry(search_frame, textvariable=self.search_var, font=ctk.CTkFont("Arial", 18))
         entry.pack(side="left", fill="x", expand=True)
 
+        # Crée le bouton Entrer
         button = ctk.CTkButton(search_frame, text="Entrer", command=self.enter_pressed, fg_color="#6062f9", font=ctk.CTkFont("Arial", 16))
         button.pack(side="right", padx=(15, 0))
 
+        # Crée une liste déroulante (Listbox) pour afficher les suggestions,
+        # avec une hauteur de 5 lignes, car que 5 prof on la même initiale.
         self.suggestions_list = Listbox(main_frame, height=5, font=("Arial", 20), bg="white", selectbackground="#00e1ff")
         self.suggestions_list.pack(fill="x", pady=(5, 0))
+        
+        # Lie la sélection d'un élément dans la liste et appelle la méthode select_suggestion.
         self.suggestions_list.bind("<<ListboxSelect>>", self.select_suggestion)
 
+        # Permet de faire la même action en appuyant sur la touche Entrée qu'en appuyant sur le bouton.
         self.master.bind("<Return>", lambda event: self.enter_pressed())
     
     def update_suggestions(self):
-        search_term = self.search_var.get().lower()
+        search_term = self.search_var.get().lower()         # Récupère le texte saisi en minuscules
+        self.suggestions_list.pack(fill="x", pady=(5, 0))   # Affiche la liste des suggestions si elle n’est pas déjà visible
+        self.suggestions_list.delete(0, ctk.END)            # Vide le contenu précédent de la liste
+
+        # Si le champ est vide, on ne met pas de suggestions, mais la Listbox reste visible (vide)
         if not search_term:
-            self.suggestions_list.pack_forget()
-        else:
-            self.suggestions_list.pack()
-            self.suggestions_list.delete(0, ctk.END)
-            suggestions = [nom for nom in self.noms if nom.lower().startswith(search_term)]
-            for s in suggestions:
-                self.suggestions_list.insert(ctk.END, s)
+            return
+        # Sinon, on filtre les noms correspondant à la saisie
+        suggestions = [nom for nom in self.noms if nom.lower().startswith(search_term)]
+        # Et on les ajoute à la liste
+        for s in suggestions:
+            self.suggestions_list.insert(ctk.END, s)
 
     def select_suggestion(self, event):
-        if self.suggestions_list.curselection():
-            selected = self.suggestions_list.get(self.suggestions_list.curselection())
-            self.search_var.set(selected)
+        if self.suggestions_list.curselection():    # Vérifie qu’un élément est bien sélectionné dans la liste.
+            selected = self.suggestions_list.get(self.suggestions_list.curselection())    # Récupère le texte de l’élément sélectionné.
+            self.search_var.set(selected)   # Remplace le contenu de la barre de recherche par la suggestion choisie
 
     def enter_pressed(self):
-        nom = self.search_var.get()
-        if nom in self.noms:
-            data = bd.get_infos_prof(nom)
-            self.create_answer(data)
-            self.noms.remove(nom)
-            # logique de victoire/défaite + ajout des infos au tableau
-            print(f"Tentative {self.compteur_essais} : {nom}")
-            self.search_var.set("")
-            self.update_suggestions()
+        nom = self.search_var.get()         # Récupère le nom actuellement saisi dans la barre de recherche
+        if nom in self.noms:                # Vérifie si ce nom est dans la liste des noms de prof
+            data = bd.get_infos_prof(nom)   # Récupère les informations associées au prof via la base de données
+            self.create_answer(data)        # Affiche ces informations dans l’interface
+            self.noms.remove(nom)           # Retire ce nom de la liste pour éviter qu’il ne soit deviné à nouveau
+            self.search_var.set("")         # Réinitialise le champ de saisi
+            self.update_suggestions()       # Met a jour les suggestions
