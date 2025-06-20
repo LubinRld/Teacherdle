@@ -6,7 +6,7 @@ import threading
 import random
 
 class CitationPage:
-    def __init__(self, master, noms, citation, back_callback):
+    def __init__(self, master, noms, citation, back_callback, restart_callback):
         self.master = master
         self.noms = noms
         self.citation = citation
@@ -15,6 +15,7 @@ class CitationPage:
         self.search_var = ctk.StringVar()
         self.frame = ctk.CTkFrame(master, fg_color="#3B8ED0", corner_radius=0)
         self.back_callback = back_callback
+        self.restart_callback = restart_callback
 
         self.label = ctk.CTkLabel(self.frame, text="Teacherdle", text_color="black", font=("Comic Sans MS", 60), bg_color='#3B8ED0')
         self.label.pack(padx=0.5, pady=0.5)
@@ -143,27 +144,40 @@ class CitationPage:
         )
         congrats_label.place(relx=0.5, rely=0.4, anchor="center")
 
+        buttons_frame = ctk.CTkFrame(self.frame_win, fg_color="transparent")
+        buttons_frame.place(relx=0.5, rely=0.85, anchor="center")
+
+        menu_button = ctk.CTkButton(
+        buttons_frame,
+        text="Retour au menu",
+        font=ctk.CTkFont(size=14),
+        command=lambda: (self.frame_win.destroy(), self.back_callback())
+        )
+        menu_button.pack(side="left", padx=20)
+
+        restart_button = ctk.CTkButton(
+        buttons_frame,
+        text="Relancer",
+        font=ctk.CTkFont(size=14),
+        command=lambda: (self.frame_win.destroy(), self.restart_callback())
+        )
+        restart_button.pack(side="left", padx=20)
+
         close_button = ctk.CTkButton(
-        self.frame_win,
+        buttons_frame,
         text="Revoir vos guess",
-        font=ctk.CTkFont(size=16),
+        font=ctk.CTkFont(size=14),
         command=self.frame_win.destroy
         )
-        close_button.place(relx=0.5, rely=0.85, anchor="w")
-        menu_button = ctk.CTkButton(
-            self.frame_win,
-            text="retour au menu",
-            font=ctk.CTkFont(size=16),
-            command=lambda: (self.frame_win.destroy(), self.back_callback())
-        )
-        menu_button.place(relx=0.5, rely=0.85, anchor="e")
+        close_button.pack(side="left", padx=20)
 
+        
     # Lance l’animation dans un thread
         threading.Thread(target=self.confetti_animation, daemon=True).start()
 
 
     def confetti_animation(self):
-        for _ in range(200):
+        for _ in range(150):
             if self.frame_win.winfo_exists():
                 label = ctk.CTkLabel(
                 self.frame_win,

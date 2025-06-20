@@ -40,7 +40,8 @@ class TeacherdleApp:
             master=self.window,
             noms=self.noms,
             prof_cible=self.prof_cible,
-            back_callback=self.show_welcome_page
+            back_callback=self.show_welcome_page,
+            restart_callback=self.show_classic_page
         )
 
     def show_citation_page(self):
@@ -51,7 +52,8 @@ class TeacherdleApp:
             master=self.window,
             noms=self.noms,
             citation=self.citation,
-            back_callback=self.show_welcome_page
+            back_callback=self.show_welcome_page,
+            restart_callback=self.show_citation_page
         )
 if __name__=="__main__":
     TeacherdleApp()
