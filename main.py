@@ -4,6 +4,7 @@ import fonctions_bdd as bd
 from citation_page import *
 from classic_page import *
 from welcome_page import *
+from PIL import Image
 
 class TeacherdleApp:
     def __init__(self):
@@ -41,6 +42,7 @@ class TeacherdleApp:
             prof_cible=self.prof_cible,
             back_callback=self.show_welcome_page
         )
+
     def show_citation_page(self):
         self.clear_current_page()
         self.noms= bd.envoie_noms()

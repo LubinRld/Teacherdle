@@ -2,8 +2,6 @@ import customtkinter as ctk
 from tkinter import *
 from PIL import Image
 import fonctions_bdd as bd
-import threading
-import random
 
 class WelcomePage:
     def __init__(self, master, start_classic_callback, start_citation_callback):

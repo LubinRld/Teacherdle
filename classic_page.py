@@ -47,7 +47,6 @@ class ClassicPage:
     
     def create_answer(self, data):
         
-
         reussi = 0
         for col, info in enumerate(data[0]):
             answer = self.prof_cible[col]
@@ -140,17 +139,16 @@ class ClassicPage:
                 label.place(x=self.get_coord_x(), y=self.get_coord_y())
                 self.frame_win.after(random.randint(800, 2000), label.destroy)
 
-
     def get_coord_x(self):
-        self.x = random.randint(20, 1040)
-        while 320 < self.x < 720:
-            self.x = random.randint(20, 1040)
+        self.x = random.randint(0, 2000)
+        while 320 < self.x < 1080:
+            self.x = random.randint(0, 2000)
         return self.x
 
     def get_coord_y(self):
-        y = random.randint(20, 720)
+        y = random.randint(0,2000)
         if 320 < self.x < 720:
-            while 360 < y < 460:
+            while 360 < y < 720:
                 y = random.randint(20, 720)
         return y
     
@@ -207,7 +205,6 @@ class ClassicPage:
     
     def update_suggestions(self):
         search_term = self.search_var.get().lower()
-        self.suggestions_list.delete(0, ctk.END)
         if not search_term:
             self.suggestions_list.pack_forget()
         else:
@@ -232,3 +229,5 @@ class ClassicPage:
             print(f"Tentative {self.compteur_essais} : {nom}")
             self.search_var.set("")
             self.update_suggestions()
+
+

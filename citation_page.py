@@ -27,6 +27,36 @@ class CitationPage:
         self.create_search_bar()
         self.create_table()
 
+        self.hint_wait_label = ctk.CTkLabel(
+            self.frame,
+            text="Un indice sera disponible dans 3 essais",
+            text_color="black",
+            font=ctk.CTkFont(size=16),
+            bg_color="#3B8ED0"
+        )
+        self.hint_wait_label.pack()
+
+        self.hint_button = ctk.CTkButton(
+            self.frame,
+            text="Cliquez pour voir l'indice",
+            font=ctk.CTkFont(size=16),
+            command=self.reveal_hint,
+            fg_color="#FFA500"
+        )
+
+        self.hint_button.pack(pady=5)
+        self.hint_button.pack_forget()  # Cacher au début
+
+        self.hint_label = ctk.CTkLabel(
+            self.frame,
+            text="",  # Vide au début
+            text_color="black",
+            font=ctk.CTkFont(size=18),
+            bg_color="#3B8ED0"
+        )
+        self.hint_label.pack()
+        self.hint_label.pack_forget()  # Cacher au début
+
     def destroy(self):
         self.frame.destroy()
         self.label.destroy()
@@ -66,14 +96,26 @@ class CitationPage:
             corner_radius=8
         )
         label.grid(row=self.current_row, column=0, sticky="nsew", padx=1, pady=5)
-
-        if self.compteur_essais >= 6:
+        
+        self.compteur_essais += 1
+        self.current_row += 1
+        essais_restants = 3 - self.compteur_essais
+        if essais_restants > 0:
+            self.hint_wait_label.configure(text=f"Un indice sera disponible dans {essais_restants} essai(s)")
+        elif self.compteur_essais == 3:
+            self.hint_wait_label.pack_forget()
+            self.hint_button.pack()
+        elif self.compteur_essais >= 6:
             self.show_defeat_animation()
             return
-        else:
-            self.compteur_essais += 1
-            self.current_row += 1
     
+    def reveal_hint(self):
+        subject = bd.get_subject_prof(self.citation)
+        self.hint_label.configure(text=f"La matière du professeur à deviner est {subject}")
+        self.hint_label.pack()
+        self.hint_button.pack_forget()
+    
+
     def create_color(self, info, answer):
         bg = "#ff6666"  # rouge clair
         infos_split = info.split()
@@ -88,7 +130,7 @@ class CitationPage:
         if info == answer:
             bg = "#66ff66"  # vert clair
         return bg
-        
+
     def show_win_animation(self):
         self.frame_win = ctk.CTkFrame(self.master, fg_color="white", corner_radius=0)
         self.frame_win.place(relx=0, rely=0, relwidth=1, relheight=1)
@@ -121,29 +163,28 @@ class CitationPage:
 
 
     def confetti_animation(self):
-        for _ in range(100):
+        for _ in range(200):
             if self.frame_win.winfo_exists():
                 label = ctk.CTkLabel(
                 self.frame_win,
                 text="✨",
-                font=ctk.CTkFont(size=random.randint(1, 50)),
+                font=ctk.CTkFont(size=random.randint(20, 50)),
                 bg_color="transparent",
                 text_color=random.choice(["#ff5e5e", "#f7c948", "#5ec576", "#5ea8ff", "#b15eff"])
                 )
                 label.place(x=self.get_coord_x(), y=self.get_coord_y())
                 self.frame_win.after(random.randint(800, 2000), label.destroy)
 
-
     def get_coord_x(self):
-        self.x = random.randint(20, 1040)
+        self.x = random.randint(0, 2000)
         while 320 < self.x < 720:
-            self.x = random.randint(20, 1040)
+            self.x = random.randint(0, 2000)
         return self.x
 
     def get_coord_y(self):
-        y = random.randint(20, 720)
+        y = random.randint(0,2000)
         if 320 < self.x < 720:
-            while 360 < y < 460:
+            while 360 < y < 720:
                 y = random.randint(20, 720)
         return y
     
@@ -224,4 +265,3 @@ class CitationPage:
             print(f"Tentative {self.compteur_essais} : {nom}")
             self.search_var.set("")
             self.update_suggestions()
-
