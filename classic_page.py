@@ -187,13 +187,33 @@ class ClassicPage:
         )
         reveal_label.place(relx=0.5, rely=0.5, anchor="center")
 
-        retry_button = ctk.CTkButton(
-            frame_defeat,
-            text="Réessayer",
-            font=ctk.CTkFont(size=16),
-            command=frame_defeat.destroy
+        buttons_frame = ctk.CTkFrame(frame_defeat, fg_color="transparent")
+        buttons_frame.place(relx=0.5, rely=0.85, anchor="center")
+
+        menu_button = ctk.CTkButton(
+        buttons_frame,
+        text="Retour au menu",
+        font=ctk.CTkFont(size=14),
+        command=lambda: (frame_defeat.destroy(), self.back_callback())
         )
-        retry_button.place(relx=0.5, rely=0.7, anchor="center")
+        menu_button.pack(side="left", padx=20)
+
+        restart_button = ctk.CTkButton(
+        buttons_frame,
+        text="Relancer",
+        font=ctk.CTkFont(size=14),
+        command=lambda: (frame_defeat.destroy(), self.restart_callback())
+        )
+        restart_button.pack(side="left", padx=20)
+
+        close_button = ctk.CTkButton(
+        buttons_frame,
+        text="Revoir vos guess",
+        font=ctk.CTkFont(size=14),
+        command=frame_defeat.destroy
+        )
+
+        close_button.pack(side="left", padx=20)
 
 
     def create_search_bar(self):
