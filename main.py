@@ -18,7 +18,7 @@ class TeacherdleApp:
         self.current_page = None
         self.show_welcome_page()
         self.window.mainloop()
-    
+        
     def clear_current_page(self):
         if self.current_page:
             self.current_page.destroy()
