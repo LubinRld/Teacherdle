@@ -31,12 +31,12 @@ class WelcomePage:
             self.frame,
             text="Citation",
             image=citation_btn_img,
-            compound="left",
+            compound="left", #on place l'image à gauche du texte
             font=("Arial", 60),
             bg_color="#3B8ED0",
             width=320,
             height=70,
-            anchor="w",
+            anchor="w", #on place tout à gauche du bouton
             command=start_citation_callback
         )
         self.citation_button.pack(pady=10)
