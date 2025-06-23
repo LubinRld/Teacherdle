@@ -57,24 +57,3 @@ We also got the Game of the Citations, where you must guess who says something, 
 
 
 
-Teacherdle 是一个 Wordle 类型的游戏，也就是说，您必须从一个教师列表中猜出一位教师。
-我们使用一个数据库来存储教师的信息（公共数据，不含个人信息）。
-
-要运行游戏，只需克隆 git 目录，然后运行以下命令：
-```
-
-pip install pillow
-```
-这是我们的数据库 UML 图：
-![image](https://github.com/user-attachments/assets/8e3337ae-208d-4614-b51c-7964583a9607)
-
-在这个数据库中，我们有教师的信息以及与之相关的语录。
-
-
-下面是游戏算法的工作原理：
-![image](https://github.com/user-attachments/assets/b99424e1-ec4c-43c6-ae8e-da27575bf4c7)
-
-
-
-
-我们还有一个 “引文 ”游戏，让你猜哪位老师说过一句引文，算法基本相同，但尝试三次后会得到提示。
