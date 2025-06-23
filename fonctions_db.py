@@ -61,3 +61,16 @@ def choice_citations():
     print(citation_filtrees)
     
     return citation_filtrees
+
+def count_max_same_initial():
+    names = send_names()
+    initials = [name[0].upper() for name in names if name]  #Liste contenant les initiales (lettres majuscules) de tous les noms dans la liste names.
+    counter_letters = {}  # dictionnaire vide
+    for letter in initials:
+        if letter in counter_letters:
+            counter_letters[letter] += 1  # si déjà présent, on incrémente
+        else:
+            counter_letters[letter] = 1   # sinon, on l’ajoute avec 1
+    
+    max_count = max(counter_letters.values())  # récupère la valeur max du dictionnaire
+    return max_count

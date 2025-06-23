@@ -239,7 +239,7 @@ class ClassicPage:
 
         # Crée une liste déroulante (Listbox) pour afficher les suggestions,
         # avec une hauteur de 5 lignes, car que 5 prof on la même initiale.
-        self.suggestions_list = Listbox(main_frame, height=5, font=("Arial", 20), bg="white", selectbackground="#00e1ff")
+        self.suggestions_list = Listbox(main_frame, height=db.count_max_same_initial(), font=("Arial", 20), bg="white", selectbackground="#00e1ff")
         self.suggestions_list.pack(fill="x", pady=(5, 0))
         
         # Lie la sélection d'un élément dans la liste et appelle la méthode select_suggestion.

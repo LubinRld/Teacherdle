@@ -267,7 +267,7 @@ class CitationPage:
         button = ctk.CTkButton(search_frame, text="Entrer", command=self.enter_pressed, fg_color="#6062f9", font=ctk.CTkFont("Arial", 16))
         button.pack(side="right", padx=(15, 0))
 
-        self.suggestions_list = Listbox(main_frame, height=5, font=("Arial", 20), bg="white", selectbackground="#00e1ff")
+        self.suggestions_list = Listbox(main_frame, height=db.count_max_same_initial(), font=("Arial", 20), bg="white", selectbackground="#00e1ff")
         self.suggestions_list.pack(fill="x", pady=(5, 0))
         self.suggestions_list.bind("<<ListboxSelect>>", self.select_suggestion)
 
