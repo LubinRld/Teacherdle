@@ -3,7 +3,6 @@ import sqlite3
 import del_database
 import random
 
-#lors du premier lancement, mettre en commentaire la ligne suivante
 del_database.delete_table()
 
 co = sqlite3.connect("TeacherdleDB.db") #recuperation du connecteur
@@ -12,8 +11,8 @@ cu = co.cursor() #recuperation du curseur
 create_database.initialisation_table(co,cu)# on initialise la table avec ces deux éléments
 def get_infos_prof(name):
     finals_info = []
-    infos = cu.execute("SELECT * FROM Teachers WHERE name=?", (name,))
-    filtered_info = infos.fetchall()
+    infos = cu.execute("SELECT * FROM Teachers WHERE name=?", (name,)) #la virgule est nécessaire pour spécifier que c'est un tuple
+    filtered_info = infos.fetchall() #fetchall récupère les lignes et les mets sous une liste de tuple
     for i in filtered_info:
         finals_info.append(list(i[1:]))
     return finals_info
@@ -34,14 +33,12 @@ def numbers_profs():
 def get_subject_prof(citation):
     res = cu.execute("SELECT Subject FROM Teachers WHERE name=?",(citation[0][2],))
     subject = res.fetchall()
-
     return (subject[0][0])
-    
+
 def choice_teachers():
 #fin de la mise en place, on commence le jeu
     numb = cu.execute("SELECT COUNT(*) from Teachers")
     numbfetch = numb.fetchall()
-    print(numbfetch[0][0])
     a = random.randint(1,numbfetch[0][0])    #choix d un id de professeur aléatoire
     target = cu.execute("SELECT * from Teachers WHERE id={}".format(a)) 
     name_target = target.fetchall()   #on récupère le nom du professeur "cible" et on le montre pour l'instant
@@ -54,7 +51,6 @@ def choice_teachers():
 def choice_citations():
     numb = cu.execute("SELECT COUNT(*) from Citations")
     numbfetch = numb.fetchall()
-    print(numbfetch[0][0])
     a = random.randint(1,numbfetch[0][0])
     citation = cu.execute("SELECT * from Citations WHERE id_cit=?",(a,))
     citation_filtrees = citation.fetchall()

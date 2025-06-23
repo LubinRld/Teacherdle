@@ -10,10 +10,10 @@ class CitationPage:
         self.master = master
         self.name = name
         self.citation = citation
-        self.try_counter = 0
-        self.current_row = 1
+        self.try_counter = 0 
+        self.current_row = 1 #ligne dans le tableau des essais
         self.search_var = ctk.StringVar()
-        self.is_animation = False
+        self.is_animation = False #permet de savoir si l'animation est encore en cours
         self.frame = ctk.CTkFrame(master, fg_color="#3B8ED0", corner_radius=0)
         self.back_callback = back_callback
         self.restart_callback = restart_callback
@@ -65,7 +65,7 @@ class CitationPage:
         self.label2.destroy()
 
     def create_table(self):
-        categories = ["Professeur"]
+        categories = ["Professeur"] 
         self.table_frame = ctk.CTkFrame(self.frame, fg_color="white", corner_radius=8)
         self.table_frame.pack(fill="both", padx=20, pady=20)
 
@@ -118,7 +118,7 @@ class CitationPage:
     def create_color(self, info, answer):
         bg = "#ff6666"  # rouge clair
         target_split = info.split()
-        answer_split = answer.split()
+        answer_split = answer.split() #permet de split en tableau avec un mot par case
         split = 0
         for k in target_split:
             for l in answer_split:
@@ -132,7 +132,7 @@ class CitationPage:
 
     def show_win_animation(self):
         self.frame_win = ctk.CTkFrame(self.master, fg_color="white", corner_radius=0)
-        self.frame_win.place(relx=0, rely=0, relwidth=1, relheight=1)
+        self.frame_win.place(relx=0, rely=0, relwidth=1, relheight=1) #permet de prendre toute la place de la frame parent
 
         congrats_label = ctk.CTkLabel(
         self.frame_win,
@@ -150,7 +150,7 @@ class CitationPage:
         self.buttons_frame,
         text="Retour au menu",
         font=ctk.CTkFont(size=14),
-        command=lambda: not self.is_animation and (self.frame_win.destroy(), self.back_callback())
+        command=lambda: not self.is_animation and (self.frame_win.destroy(), self.back_callback()) #le not permet d'être sûr qu'on ne puisse pas appuyer sur le bouton si il y a une animation
         )
         menu_button.pack(side="left", padx=20)
 
@@ -174,10 +174,10 @@ class CitationPage:
     # Lance l’animation dans un thread
         self.is_animation = True
         threading.Thread(target=self.confetti_animation, daemon=True).start()
-
+        #thread est un processus qui se lance en parallèle, le daemon signifie que c'est un thread de fond, qui s'arrête si le programme principale s'arrête
 
     def confetti_animation(self):
-        for _ in range(150):
+        for i in range(150):
             if self.frame_win.winfo_exists():
                 label = ctk.CTkLabel(
                 self.frame_win,
@@ -187,8 +187,9 @@ class CitationPage:
                 text_color=random.choice(["#ff5e5e", "#f7c948", "#5ec576", "#5ea8ff", "#b15eff"])
                 )
                 label.place(x=self.get_coord_x(), y=self.get_coord_y())
-                self.frame_win.after(random.randint(800, 2000), label.destroy)
-                self.frame_win.after(3000, lambda: (setattr(self, "is_animation", False), self.buttons_frame.place(relx=0.5, rely=0.85, anchor="center")))
+                self.frame_win.after(random.randint(800, 2000), label.destroy) #on attends entre 800 et 2000 ms avant de supprimer le confetti
+        # On attends 3 sec avant d'annoncer que l'animation est fini, et on affiche les boutons (setattr permet de modifier dynamiquement un attribut) : 
+        self.frame_win.after(1500, lambda: (setattr(self, "is_animation", False), self.buttons_frame.place(relx=0.5, rely=0.85, anchor="center")))
 
     def get_coord_x(self):
         self.x = random.randint(0, 2000)
@@ -196,8 +197,8 @@ class CitationPage:
 
     def get_coord_y(self):
         y = random.randint(0,2000)
-        while 230 < y < 330:
-            y = random.randint(0, 2000)
+        while 200 < y < 330: #valeur arbitraire pour éviter que les confettis spawn sur le texte
+            y = random.randint(0, 2000) 
         return y
     
     def show_defeat_animation(self):
@@ -244,7 +245,7 @@ class CitationPage:
         buttons_frame,
         text="Revoir vos guess",
         font=ctk.CTkFont(size=14),
-        command=frame_defeat.destroy
+        command=frame_defeat.destroy #on met pas de parenthèse sinon ça détruit automatiquement à la création du bouton
         )
 
         close_button.pack(side="left", padx=20)

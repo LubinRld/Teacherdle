@@ -143,7 +143,7 @@ class ClassicPage:
 
 
     def confetti_animation(self):
-        for _ in range(150):
+        for i in range(150):
             if self.frame_win.winfo_exists():
                 label = ctk.CTkLabel(
                 self.frame_win,
@@ -154,7 +154,7 @@ class ClassicPage:
                 )
                 label.place(x=self.get_coord_x(), y=self.get_coord_y())
                 self.frame_win.after(random.randint(800, 2000), label.destroy)
-                self.frame_win.after(3000, lambda: (setattr(self, "is_animation", False), self.buttons_frame.place(relx=0.5, rely=0.85, anchor="center")))
+        self.frame_win.after(1500, lambda: (setattr(self, "is_animation", False), self.buttons_frame.place(relx=0.5, rely=0.85, anchor="center")))
 
     def get_coord_x(self):
         self.x = random.randint(0, 2000)
@@ -162,7 +162,7 @@ class ClassicPage:
 
     def get_coord_y(self):
         y = random.randint(0,2000)
-        while 230 < y < 330:
+        while 200 < y < 330:
             y = random.randint(0, 2000)
         return y
     
