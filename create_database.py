@@ -48,7 +48,7 @@ def initialisation_table(connection,cursor):
 ('GINHAC', 'M', '1999', 'CM ET TD ET TP', 'INFORMATIQUE', 'Aucune'),
 ('CHASSEL', 'M', 'NON', 'CM ET TD ET TP', 'INFORMATIQUE', 'Aucune'),
 ('COILLET', 'M', '2011', 'CM ET TD ET TP', 'PHYSIQUE', 'Aucune'),
-('MORPHU', 'M', '2002', 'CM ET TD', 'ELECTRONIQUE ET INFORMATIQUE', 'Aucune'),
+('MORFU', 'M', '2002', 'CM ET TD', 'ELECTRONIQUE ET INFORMATIQUE', 'Aucune'),
 ('MARQUIE','M','1994','TP','ELECTRONIQUE','Aucune');
     """)
     connection.commit()
@@ -66,7 +66,7 @@ def initialisation_table(connection,cursor):
     ("Vous n'avez pas le droit d'enregistrer ma voix","MORPHU"),
     ("Posez moi vos questions, jsuis payé une fortune pour y répondre","CHAMBRION"),
     ("Y a aucun collègue qui me fait marrrer, je les déteste tous","MEUNIER"),
-    ("Le polynôme il est SAINGDÉ","VAGO"),
+    ("Le polynôme il est SAINDÉ","VAGO"),
     ("On est tous déja passé sous des lignes Hautes Tensions en entendant ce bruit CARACTÉRISTIQUE","WEEBER"),
     ("LE BRAINNNNSSTTTOOOORMIIIIIIIIIINNNNNNGGG","VAGO"),
     ("Nan mais votre schéma il est merdique là", "SALOMON"),

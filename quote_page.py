@@ -269,17 +269,16 @@ class CitationPage:
         self.suggestions_list.bind("<<ListboxSelect>>", self.select_suggestion)
 
         self.master.bind("<Return>", lambda event: self.enter_pressed())
-    
+        
     def update_suggestions(self):
-        search_term = self.search_var.get().lower()
+        search_term = self.search_var.get().lower()         
+        self.suggestions_list.pack(fill="x", pady=(5, 0))   
+        self.suggestions_list.delete(0, ctk.END)
         if not search_term:
-            self.suggestions_list.pack_forget()
-        else:
-            self.suggestions_list.pack()
-            self.suggestions_list.delete(0, ctk.END)
-            suggestions = [nom for nom in self.name if nom.lower().startswith(search_term)]
-            for s in suggestions:
-                self.suggestions_list.insert(ctk.END, s)
+            return
+        suggestions = [nom for nom in self.name if nom.lower().startswith(search_term)]
+        for s in suggestions:
+            self.suggestions_list.insert(ctk.END, s)
 
     def select_suggestion(self, event):
         if self.suggestions_list.curselection():
