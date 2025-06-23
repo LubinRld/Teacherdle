@@ -78,15 +78,18 @@ class ClassicPage:
 
     def create_arrow(self, info, answer):
         num = 0
-        for i in range(0,len(info)):
-            if info[i] in "1234567890":
-                num +=1
+        if len(answer) == len(info):
+            for i in range(0,len(answer)):
+                if answer[i] and info[i] in "1234567890":
+                    num +=1
         arrow = ""
         if num == 4:
             if info > answer:
                 arrow = " ▼"
             elif answer > info:
                 arrow = " ▲"
+        else:
+            arrow = ""
         return arrow
     
     def create_color(self, info, answer):
