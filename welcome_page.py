@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from tkinter import *
 from PIL import Image
-import fonctions_bdd as bd
 
 class WelcomePage:
     def __init__(self, master, start_classic_callback, start_citation_callback):
@@ -13,17 +12,17 @@ class WelcomePage:
         classic_btn_img = ctk.CTkImage(Image.open("assets/point-dinterrogation.png"), size=(60, 60))
         citation_btn_img = ctk.CTkImage(Image.open("assets/discuter.png"), size=(60, 60))
         self.classic_button = ctk.CTkButton(
-            self.frame,
-            text="Classique",
-            image=classic_btn_img,
-            compound="left",
-            font=("Arial", 60),
-            bg_color="#3B8ED0",
-            width=320,
-            height=70,
-            anchor="w",
-            command=start_classic_callback
-        )
+                self.frame,
+                text="Classique",
+                image=classic_btn_img,
+                compound="left",
+                font=("Arial", 60),
+                bg_color="#3B8ED0",
+                width=320,
+                height=70,
+                anchor="w",
+                command=start_classic_callback
+                )
         self.classic_button.pack(pady=50)
         self.classic_button.bind("<Enter>", lambda e: self.classic_button.configure(font=("Arial", 62)))
         self.classic_button.bind("<Leave>", lambda e: self.classic_button.configure(font=("Arial", 60)))

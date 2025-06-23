@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from tkinter import *
 from PIL import Image
-import fonctions_bdd as db
+import fonctions_db as db
 import threading
 import random
 
@@ -79,11 +79,8 @@ class CitationPage:
     
     def create_answer(self, data):
         
-        print(self.citation)
         target = data[0][0]
         answer = self.citation[0][2] 
-        print(answer)
-        print(data)
         if answer == data[0][0]:
             self.show_win_animation()
 
@@ -272,17 +269,16 @@ class CitationPage:
         self.suggestions_list.bind("<<ListboxSelect>>", self.select_suggestion)
 
         self.master.bind("<Return>", lambda event: self.enter_pressed())
-    
+        
     def update_suggestions(self):
-        search_term = self.search_var.get().lower()
+        search_term = self.search_var.get().lower()         
+        self.suggestions_list.pack(fill="x", pady=(5, 0))   
+        self.suggestions_list.delete(0, ctk.END)
         if not search_term:
-            self.suggestions_list.pack_forget()
-        else:
-            self.suggestions_list.pack()
-            self.suggestions_list.delete(0, ctk.END)
-            suggestions = [nom for nom in self.name if nom.lower().startswith(search_term)]
-            for s in suggestions:
-                self.suggestions_list.insert(ctk.END, s)
+            return
+        suggestions = [nom for nom in self.name if nom.lower().startswith(search_term)]
+        for s in suggestions:
+            self.suggestions_list.insert(ctk.END, s)
 
     def select_suggestion(self, event):
         if self.suggestions_list.curselection():
@@ -296,6 +292,5 @@ class CitationPage:
             self.create_answer(data)
             self.name.remove(name)
             # logique de victoire/défaite + ajout des infos au tableau
-            print(f"Tentative {self.try_counter} : {name}")
             self.search_var.set("")
             self.update_suggestions()
