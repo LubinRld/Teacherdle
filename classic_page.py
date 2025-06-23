@@ -77,7 +77,10 @@ class ClassicPage:
             self.current_row += 1
 
     def create_arrow(self, info, answer):
-        num = sum(1 for i in info if i.isdigit())
+        num = 0
+        for i in range(0,len(info)):
+            if info[i] in "1234567890":
+                num +=1
         arrow = ""
         if num == 4:
             if info > answer:
@@ -90,7 +93,12 @@ class ClassicPage:
         bg = "#ff6666"  # rouge clair
         infos_split = info.split()
         answer_split = answer.split()
-        split = sum(1 for k in infos_split for l in answer_split if k == l)
+        split = 0
+        for k in infos_split:
+            for l in answer_split:
+                if k == l :
+                    split +=1
+                
         if split > 0:
             bg = "#ffa500"  # orange
         if info == answer:
