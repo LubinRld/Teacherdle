@@ -162,7 +162,7 @@ class ClassicPage:
 
     def get_coord_y(self):
         y = random.randint(0,2000)
-        while 230 < y < 330:
+        while 200 < y < 330:
             y = random.randint(0, 2000)
         return y
     
