@@ -1,7 +1,9 @@
 # Teacherdle
 For English informations, you can go [here](#English-Version) : 
 
-Teacherdle est un jeu de type Wordle, c'est à dire que l'on doit deviner un professeur de l'école parmi une liste des autres.
+Teacherdle est un jeu de type Wordle, c'est à dire que l'on doit deviner un professeur de l'école parmi tous les autres en fonction de différentes caractéristiques.
+Nous avons également un mode citations, ou l'on doit deviner quel professeur a dit telle citation : l'algorithme de jeu est globalement le même, nous avons simplement ajouté un indice au bout de trois essais.
+
 Nous utilisons une base de données pour stocker les informations sur les professeurs (données publiques, rien de personnel)
 
 Pour faire fonctionner le jeu, il suffit de cloner le répertoire git, et d'effectuer la commande :
@@ -22,12 +24,6 @@ Voici le fonctionnement de l'algorithme de jeu :
 
 
 
-Nous avons aussi le jeu des citations, ou l'on doit deviner quel professeur a dit une citation, l'algorithme de jeu est globalement le même, on a juste un oindice aux bout de trois essais.
-
-
-
-
-
 
 
 
@@ -35,8 +31,9 @@ Nous avons aussi le jeu des citations, ou l'on doit deviner quel professeur a di
 <a name="English-Version"></a>
 # English Version
 
-Teacherdle is a Wordle-like game, which means that you hav to guess a Teachers from the engineering school among a lis of most of them.
-Here, we're using a database to stock and use the data about each teachers (only public data, nothing personal or private)
+Teacherdle is a Wordle-like game, which means that you have to guess a teacher from the engineering school thanks to multiple characteristic.
+We also have a Citation mode, where we have to guess which teacher told the sentence : the game algorythm is likely the same, we just added a hint after 3 guesses in order to help you find the answer. 
+Here, we're using a database to stock and use the data about each teacher (only public data, nothing personal or private)
 
 Before starting, you need to install pillow : 
 ```
@@ -51,8 +48,6 @@ UML diagramm of our database
 
 Here is the working of the algorithm :
 ![image](https://github.com/user-attachments/assets/e392895d-105a-4cc7-89f5-a59f4730201e)
-
-We also got the Game of the Citations, where you must guess who says something, it works the same, with, in addition, you get a hint after 3 unsuccessfull tries
 
 
 
