@@ -67,14 +67,15 @@ class ClassicPage:
             )
             label.grid(row=self.current_row, column=col, sticky="nsew", padx=1, pady=5)
 
+       
+        self.try_counter += 1
+        self.current_row += 1
         if correct == 6:
             self.show_win_animation()
         elif self.try_counter >= 6:
             self.show_defeat_animation()
             return
-        else:
-            self.try_counter += 1
-            self.current_row += 1
+        
 
     def create_arrow(self, info, answer):
         num = 0
