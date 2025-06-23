@@ -72,7 +72,8 @@ def initialisation_table(connection,cursor):
     ("Nan mais votre schéma il est merdique là", "SALOMON"),
     ("Je préfère voir les lapins plutôt que vous", "PETITJEAN"),
     ("Ça fait partit de ces séances clefs", "WEEBER"),
-    ("Et toi t'es le support émotionnel?","CHASSEL")
+    ("Et toi t'es le support émotionnel?","CHASSEL"),
+    ("ATTENTION, parcoursup ouvre la semaine prochaine", "BIDAULT")
     ;
     """)
     connection.commit()

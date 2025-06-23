@@ -20,8 +20,8 @@ class CitationPage:
 
         self.label = ctk.CTkLabel(self.frame, text="Teacherdle", text_color="black", font=("Comic Sans MS", 60), bg_color='#3B8ED0')
         self.label.pack(padx=0.5, pady=0.5)
-        self.label2 = ctk.CTkLabel(self.frame, text="qui a dit : <<{}>>".format(citation[0][1]), text_color="black", font=ctk.CTkFont("Comic Sans MS", 20), bg_color='#3B8ED0')
-        self.label2.pack(padx=0.5, pady=0.5)
+        self.quote_label = ctk.CTkLabel(self.frame, text="qui a dit : <<{}>>".format(citation[0][1]), text_color="black", font=ctk.CTkFont("Comic Sans MS", 25), bg_color='#3B8ED0')
+        self.quote_label.pack(pady=5)
         self.menu_button = ctk.CTkButton(self.frame, text="Menu Principal", font=ctk.CTkFont(size=20), fg_color="#6062f9", command=back_callback)
         self.menu_button.pack(anchor='nw', padx=100, pady=10)
         self.frame.pack(fill="both", expand=True)
@@ -62,7 +62,7 @@ class CitationPage:
     def destroy(self):
         self.frame.destroy()
         self.label.destroy()
-        self.label2.destroy()
+        self.quote_label.destroy()
 
     def create_table(self):
         categories = ["Professeur"] 
