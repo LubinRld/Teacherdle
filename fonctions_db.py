@@ -55,10 +55,9 @@ def choice_citations():
     numb = cu.execute("SELECT COUNT(*) from Citations")
     numbfetch = numb.fetchall()
     print(numbfetch[0][0])
-    a = random.randint(1,numbfetch)
+    a = random.randint(1,numbfetch[0][0])
     citation = cu.execute("SELECT * from Citations WHERE id_cit=?",(a,))
     citation_filtrees = citation.fetchall()
     print(citation_filtrees)
     
     return citation_filtrees
-a = choice_teachers()
