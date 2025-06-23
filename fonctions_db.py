@@ -39,7 +39,7 @@ def get_subject_prof(citation):
     
 def choice_teachers():
 #fin de la mise en place, on commence le jeu
-    numb = cu.execute("SELECT COUNT(*) from TEACHERS")
+    numb = cu.execute("SELECT COUNT(*) from Teachers")
     numbfetch = numb.fetchall()
     print(numbfetch[0][0])
     a = random.randint(1,numbfetch[0][0])    #choix d un id de professeur aléatoire
@@ -52,7 +52,10 @@ def choice_teachers():
     return target2
 
 def choice_citations():
-    a = random.randint(1,15)
+    numb = cu.execute("SELECT COUNT(*) from Citations")
+    numbfetch = numb.fetchall()
+    print(numbfetch[0][0])
+    a = random.randint(1,numbfetch)
     citation = cu.execute("SELECT * from Citations WHERE id_cit=?",(a,))
     citation_filtrees = citation.fetchall()
     print(citation_filtrees)
