@@ -39,7 +39,10 @@ def get_subject_prof(citation):
     
 def choice_teachers():
 #fin de la mise en place, on commence le jeu
-    a = random.randint(1,28)    #choix d un id de professeur aléatoire
+    numb = cu.execute("SELECT COUNT(*) from TEACHERS")
+    numbfetch = numb.fetchall()
+    print(numbfetch[0][0])
+    a = random.randint(1,numbfetch[0][0])    #choix d un id de professeur aléatoire
     target = cu.execute("SELECT * from Teachers WHERE id={}".format(a)) 
     name_target = target.fetchall()   #on récupère le nom du professeur "cible" et on le montre pour l'instant
     target_teacher = name_target[0]
@@ -55,3 +58,4 @@ def choice_citations():
     print(citation_filtrees)
     
     return citation_filtrees
+a = choice_teachers()
